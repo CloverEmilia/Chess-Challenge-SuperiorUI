@@ -12,9 +12,8 @@ namespace ChessChallenge.Application
 
         public static void Main()
         {
-            Vector2 loadedWindowSize = GetSavedWindowSize();
-            int screenWidth = (int)loadedWindowSize.X;
-            int screenHeight = (int)loadedWindowSize.Y;
+            int screenWidth = Settings.defaultScreenX;
+            int screenHeight = Settings.defaultScreenY;
 
             if (hideRaylibLogs)
             {
@@ -57,17 +56,18 @@ namespace ChessChallenge.Application
         {
             Raylib.SetWindowSize((int)size.X, (int)size.Y);
             UpdateCamera((int)size.X, (int)size.Y);
-            SaveWindowSize();
         }
 
         public static Vector2 ScreenToWorldPos(Vector2 screenPos) => Raylib.GetScreenToWorld2D(screenPos, cam);
 
         static void UpdateCamera(int screenWidth, int screenHeight)
         {
-            cam = new Camera2D();
-            cam.target = new Vector2(0, 15);
-            cam.offset = new Vector2(screenWidth / 2f, screenHeight / 2f);
-            cam.zoom = screenWidth / 1280f * 0.7f;
+            cam = new Camera2D
+            {
+                target = new Vector2(0, 15),
+                offset = new Vector2(screenWidth / 2f, screenHeight / 2f),
+                zoom = screenWidth / 1280f * 0.7f
+            };
         }
 
 
@@ -75,36 +75,7 @@ namespace ChessChallenge.Application
         private static unsafe void LogCustom(int logLevel, sbyte* text, sbyte* args)
         {
         }
-
-        static Vector2 GetSavedWindowSize()
-        {
-            if (File.Exists(FileHelper.PrefsFilePath))
-            {
-                string prefs = File.ReadAllText(FileHelper.PrefsFilePath);
-                if (!string.IsNullOrEmpty(prefs))
-                {
-                    if (prefs[0] == '0')
-                    {
-                        return Settings.ScreenSizeSmall;
-                    }
-                    else if (prefs[0] == '1')
-                    {
-                        return Settings.ScreenSizeBig;
-                    }
-                }
-            }
-            return Settings.ScreenSizeSmall;
-        }
-
-        static void SaveWindowSize()
-        {
-            Directory.CreateDirectory(FileHelper.AppDataPath);
-            bool isBigWindow = Raylib.GetScreenWidth() > Settings.ScreenSizeSmall.X;
-            File.WriteAllText(FileHelper.PrefsFilePath, isBigWindow ? "1" : "0");
-        }
-
       
-
     }
 
 

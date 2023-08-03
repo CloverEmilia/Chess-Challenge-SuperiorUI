@@ -12,10 +12,10 @@ namespace ChessChallenge.Application
         public const float MinMoveDelay = 0;
         public static readonly bool RunBotsOnSeparateThread = true;
 
-        // Display settings
+        // Screen Settings
         public const bool DisplayBoardCoordinates = true;
-        public static readonly Vector2 ScreenSizeSmall = new(1280, 720);
-        public static readonly Vector2 ScreenSizeBig = new(1920, 1080);
+        public const int defaultScreenX = 1280;
+        public const int defaultScreenY = 720;
 
         // Other settings
         public const int MaxTokenCount = 1024;

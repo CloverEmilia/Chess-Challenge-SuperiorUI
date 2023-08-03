@@ -92,10 +92,7 @@ namespace ChessChallenge.Application
             int fontSize = ScaleInt(28);
 
             if (pressed) { //squishy button interactivity
-                rec.width *= .75f;
-                rec.x = 1.25f * rec.x;
-                rec.height *= 1.25f;
-                rec.y -= rec.height * .125f;
+                SquishButtonWidthAndPosition(ref rec);
                 fontSize = ScaleInt(38);
             }
 
@@ -104,6 +101,31 @@ namespace ChessChallenge.Application
             DrawText(text, centre, fontSize, 1, textCol, AlignH.Centre);
 
             return pressedThisFrame;
+        }
+
+            //this might be needless by a couple lines, I've been staring at it too long
+        static void SquishButtonWidthAndPosition(ref Rectangle rec)
+        {
+            // Get the original button dimensions
+            float originalWidth = rec.width;
+            float originalHeight = rec.height;
+            Vector2 originalPosition = new(rec.x, rec.y);
+
+            // Calculate the new dimensions;
+            float newWidth = originalWidth * 0.75f;
+            float newHeight = originalHeight *1.25f;
+
+            // Calculate the change
+            float widthChange = originalWidth - newWidth;
+            float heightChange = originalHeight - newHeight;
+
+            // Update the dimensions
+            rec.width = newWidth;
+            rec.height = newHeight;
+
+            // adjust to keep centered, pivot is in the center
+            rec.x = originalPosition.X + widthChange / 2;
+            rec.y = originalPosition.Y + heightChange / 2;
         }
 
         static bool MouseInRect(Rectangle rec)
