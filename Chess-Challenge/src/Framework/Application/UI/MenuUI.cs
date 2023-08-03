@@ -70,7 +70,7 @@ namespace ChessChallenge.Application
                 Environment.Exit(0);
             }
 
-            bool NextButtonInRow(string name, ref Vector2 pos, float spacingY, Vector2 size)
+            static bool NextButtonInRow(string name, ref Vector2 pos, float spacingY, Vector2 size)
             {
                 bool pressed = UIHelper.Button(name, pos, size);
                 pos.Y += spacingY;

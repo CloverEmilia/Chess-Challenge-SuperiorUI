@@ -4,27 +4,27 @@ namespace ChessChallenge.Application
 {
     public class BoardTheme
     {
-        public Color LightCol = new Color(196, 210, 230, 255);       // Light blue (toned down)
-        public Color DarkCol = new Color(90, 120, 160, 255);        // Dark blue (toned down)
-        public Color selectedLight = new Color(190, 170, 230, 255); // Pale purple (toned down)
-        public Color selectedDark = new Color(140, 100, 200, 255);  // Dark purple (toned down)
+        public Color LightCol = new(196, 210, 230, 255);       // Light blue (toned down)
+        public Color DarkCol = new(90, 120, 160, 255);        // Dark blue (toned down)
+        public Color selectedLight = new(190, 170, 230, 255); // Pale purple (toned down)
+        public Color selectedDark = new(140, 100, 200, 255);  // Dark purple (toned down)
 
-        public Color MoveFromLight = new Color(200, 160, 205, 155); // Light purple (toned down)
-        public Color MoveFromDark = new Color(200, 160, 205, 155);  // Dark purple (toned down)
+        public Color MoveFromLight = new(200, 160, 205, 155); // Light purple (toned down)
+        public Color MoveFromDark = new(200, 160, 205, 155);  // Dark purple (toned down)
 
-        public Color MoveToLight = new Color(220, 120, 255, 155);   // Pale purple (toned down)
-        public Color MoveToDark = new Color(220, 120, 255, 155);    // Dark pale purple (toned down)
+        public Color MoveToLight = new (220, 120, 255, 155);   // Pale purple (toned down)
+        public Color MoveToDark = new (220, 120, 255, 155);    // Dark pale purple (toned down)
 
-        public Color LegalLight = new Color(255, 240, 180, 255);    // Pale yellow (toned down)
-        public Color LegalDark = new Color(230, 200, 150, 255);     // Dark pale yellow (toned down)
+        public Color LegalLight = new (255, 240, 180, 255);    // Pale yellow (toned down)
+        public Color LegalDark = new (230, 200, 150, 255);     // Dark pale yellow (toned down)
 
-        public Color CheckLight = new Color(255, 100, 100, 255);    // Light red (toned down)
-        public Color CheckDark = new Color(255, 100, 100, 255);       // Dark red (toned down)
+        public Color CheckLight = new (255, 100, 100, 255);    // Light red (toned down)
+        public Color CheckDark = new (255, 100, 100, 255);       // Dark red (toned down)
 
-        public Color BorderCol = new Color(80, 80, 80, 255);        // Dark grey (toned down)
+        public Color BorderCol = new (80, 80, 80, 255);        // Dark grey (toned down)
 
-        public Color LightCoordCol = new Color(210, 230, 245, 255); // Light blue (toned down)
-        public Color DarkCoordCol = new Color(100, 140, 180, 255);  // Dark blue (toned down)
+        public Color LightCoordCol = new (210, 230, 245, 255); // Light blue (toned down)
+        public Color DarkCoordCol = new (100, 140, 180, 255);  // Dark blue (toned down)
 
 
 

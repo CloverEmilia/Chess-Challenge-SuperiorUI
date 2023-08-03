@@ -95,7 +95,7 @@ namespace ChessChallenge.Application
                 rec.width *= .75f;
                 rec.x = 1.25f * rec.x;
                 rec.height *= 1.25f;
-                rec.y = rec.y - rec.height * .125f;
+                rec.y -= rec.height * .125f;
                 fontSize = ScaleInt(38);
             }
 
