@@ -411,7 +411,7 @@ namespace ChessChallenge.Application
             int newA = (int)(Math.Round(Lerp(a.a, b.a, t)));
             return new Color(newR, newG, newB, newA);
 
-            float Lerp(float a, float b, float t)
+            static float Lerp(float a, float b, float t)
             {
                 t = Math.Min(1, Math.Max(t, 0));
                 return a + (b - a) * t;
