@@ -4,6 +4,35 @@ namespace ChessChallenge.Application
 {
     public class BoardTheme
     {
+        public Color LightCol = new Color(196, 210, 230, 255);       // Light blue (toned down)
+        public Color DarkCol = new Color(90, 120, 160, 255);        // Dark blue (toned down)
+        public Color selectedLight = new Color(190, 170, 230, 255); // Pale purple (toned down)
+        public Color selectedDark = new Color(140, 100, 200, 255);  // Dark purple (toned down)
+
+        public Color MoveFromLight = new Color(200, 160, 205, 155); // Light purple (toned down)
+        public Color MoveFromDark = new Color(200, 160, 205, 155);  // Dark purple (toned down)
+
+        public Color MoveToLight = new Color(220, 120, 255, 155);   // Pale purple (toned down)
+        public Color MoveToDark = new Color(220, 120, 255, 155);    // Dark pale purple (toned down)
+
+        public Color LegalLight = new Color(255, 240, 180, 255);    // Pale yellow (toned down)
+        public Color LegalDark = new Color(230, 200, 150, 255);     // Dark pale yellow (toned down)
+
+        public Color CheckLight = new Color(255, 100, 100, 255);    // Light red (toned down)
+        public Color CheckDark = new Color(255, 100, 100, 255);       // Dark red (toned down)
+
+        public Color BorderCol = new Color(80, 80, 80, 255);        // Dark grey (toned down)
+
+        public Color LightCoordCol = new Color(210, 230, 245, 255); // Light blue (toned down)
+        public Color DarkCoordCol = new Color(100, 140, 180, 255);  // Dark blue (toned down)
+
+
+
+
+
+
+
+        /* Original colors-
         public Color LightCol = new Color(238, 216, 192, 255);
         public Color DarkCol = new Color(171, 121, 101, 255);
 
@@ -25,7 +54,7 @@ namespace ChessChallenge.Application
         public Color BorderCol = new Color(44, 44, 44, 255);
 
         public Color LightCoordCol = new Color(255, 240, 220, 255);
-        public Color DarkCoordCol = new Color(140, 100, 80, 255);
+        public Color DarkCoordCol = new Color(140, 100, 80, 255);*/
     }
 }
 

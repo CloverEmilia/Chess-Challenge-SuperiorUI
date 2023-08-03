@@ -8,7 +8,7 @@ namespace ChessChallenge.Application
     public static class UIHelper
     {
         static readonly bool SDF_Enabled = true;
-        const string fontName = "OPENSANS-SEMIBOLD.TTF";
+        const string fontName = "damase_v2.ttf";
         const int referenceResolution = 1920;
 
         static Font font;
@@ -81,17 +81,25 @@ namespace ChessChallenge.Application
             Rectangle rec = new(centre.X - size.X / 2, centre.Y - size.Y / 2, size.X, size.Y);
 
             Color normalCol = new(40, 40, 40, 255);
-            Color hoverCol = new(3, 173, 252, 255);
-            Color pressCol = new(2, 119, 173, 255);
+            Color hoverCol = new(230, 200, 150, 255);
+            Color pressCol = new(250, 230, 130, 255);
 
             bool mouseOver = MouseInRect(rec);
             bool pressed = mouseOver && Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT);
             bool pressedThisFrame = pressed && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT);
             Color col = mouseOver ? (pressed ? pressCol : hoverCol) : normalCol;
+            Color textCol = mouseOver ? Color.WHITE : new Color(130, 130, 130, 205);
+            int fontSize = ScaleInt(28);
+
+            if (pressed) { //squishy button interactivity
+                rec.width *= .75f;
+                rec.x = 1.25f * rec.x;
+                rec.height *= 1.25f;
+                rec.y = rec.y - rec.height * .125f;
+                fontSize = ScaleInt(38);
+            }
 
             Raylib.DrawRectangleRec(rec, col);
-            Color textCol = mouseOver ? Color.WHITE : new Color(180, 180, 180, 255);
-            int fontSize = ScaleInt(32);
 
             DrawText(text, centre, fontSize, 1, textCol, AlignH.Centre);
 
