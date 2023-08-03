@@ -18,6 +18,7 @@ namespace ChessChallenge.Application
         static int currentTab = 0; // Current tab index
             //Screen Size Variables
         static float screenSizeMultiplier = 1; 
+        static float amountToChangeScreenByPerButtonPress = 1.2f;
 
 
         public static void DrawButtons(ChallengeController controller)
@@ -38,7 +39,7 @@ namespace ChessChallenge.Application
             UIHelper.DrawText("Player 1: " + selectedBotA, selectionTextStartingPosition, selectionTextSize, selectionTextSpacing, selectingBotBAndNotA ? Color.GRAY : Color.GREEN);
             UIHelper.DrawText("Player 2: " + selectedBotB, selectionTextStartingPosition + playerTwoOffsetPosition, selectionTextSize, selectionTextSpacing, !selectingBotBAndNotA ? Color.GRAY : Color.GREEN);
             //and the tabs
-            UIHelper.DrawText("tab: " + currentTab+ "/" + (int)(playerArray.Length / botsPerTab), buttonPos * 1.55f + Vector2.UnitY * buttonPos.Y * -0.3f, 20, 1, Color.GRAY); //gods help me this allignment is painful, it doesn't matter for now
+            UIHelper.DrawText("tab: " + (currentTab + 1)+ "/" + ((int)(playerArray.Length / botsPerTab)+1), buttonPos * 1.55f + Vector2.UnitY * buttonPos.Y * -0.3f, 20, 1, Color.GRAY); //gods help me this allignment is painful, it doesn't matter for now
 
 
                 //Tab management (this might be garbage)
@@ -144,16 +145,15 @@ namespace ChessChallenge.Application
 
             // Resources/External buttons
             buttonPos.Y += breakSpacing;
-
-            if (NextButtonInRow("Rules & Help", ref buttonPos, spacing, buttonSize))
+            if (NextButtonInRow("See Rules", ref buttonPos, spacing, buttonSize * .7f))
             {
                 FileHelper.OpenUrl("https://github.com/SebLague/Chess-Challenge");
             }
-            if (NextButtonInRow("Documentation", ref buttonPos, spacing, buttonSize))
+            if (NextButtonInRow("See Docs", ref buttonPos, spacing, buttonSize * .7f))
             {
                 FileHelper.OpenUrl("https://seblague.github.io/chess-coding-challenge/documentation/");
             }
-            if (NextButtonInRow("Submission Page", ref buttonPos, spacing, buttonSize))
+            if (NextButtonInRow("Submit", ref buttonPos, spacing, buttonSize * .7f))
             {
                 FileHelper.OpenUrl("https://forms.gle/6jjj8jxNQ5Ln53ie6");
             }
@@ -174,13 +174,17 @@ namespace ChessChallenge.Application
 
             if (NextButtonInRow("--- screen", ref buttonPos, spacing * .9f, buttonSize * .7f))
             {
-                screenSizeMultiplier *= .9f;
-                Program.SetWindowSize(new Vector2(Settings.defaultScreenX, Settings.defaultScreenY) * screenSizeMultiplier);
+                screenSizeMultiplier /= amountToChangeScreenByPerButtonPress;
+                UpdateApplicationWindowSize();
             }
             if (NextButtonInRow("screen +++", ref buttonPos, spacing * 1.2f, buttonSize * .7f))
             {
-                screenSizeMultiplier *= 1.1f;
-                Program.SetWindowSize(new Vector2(Settings.defaultScreenX, Settings.defaultScreenY) * screenSizeMultiplier);
+                screenSizeMultiplier *= amountToChangeScreenByPerButtonPress;
+                UpdateApplicationWindowSize();
+            }
+
+            static void UpdateApplicationWindowSize(){
+            Program.SetWindowSize(new Vector2(Settings.defaultScreenX, Settings.defaultScreenY) * screenSizeMultiplier);
             }
             if (NextButtonInRow("Exit (ESC)", ref buttonPos, spacing, buttonSize))
             {

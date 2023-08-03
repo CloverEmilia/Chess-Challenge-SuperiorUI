@@ -3,6 +3,8 @@ using System.Numerics;
 using System;
 using static System.Formats.Asn1.AsnWriter;
 
+//Huge thank you to MoonWalker for letting me use things from his BetterUI fork, this script specifically is ripped nearly 1:1,
+//works lovely!
 namespace ChessChallenge.Application
 {
     public static class MatchStatsUI
@@ -43,11 +45,11 @@ namespace ChessChallenge.Application
                     DrawNextText($"Num Timeouts: {stats.NumTimeouts}", regularFontSize, col);
                     DrawNextText($"Num Illegal Moves: {stats.NumIllegalMoves}", regularFontSize, col);
                     DrawNextText($"Winrate: {(float)stats.NumWins / (controller.CurrGameNumber - 1) * 100}%", regularFontSize, green);
-                    DrawNextText($"Draw rate: {(float)stats.NumDraws / (controller.CurrGameNumber - 1) * 100}%", regularFontSize, white);
+                    //DrawNextText($"Draw rate: {(float)stats.NumDraws / (controller.CurrGameNumber - 1) * 100}%", regularFontSize, white); //draw rate feels easy to calculate in your head from Win/Loss% and W/D/L, but, don't delete in case someone *really* wants it back for whatever reason 
                     DrawNextText($"Loss rate: {(float)stats.NumLosses / (controller.CurrGameNumber - 1) * 100}%", regularFontSize, red);
+                    DrawNextText($"Moves per Game: {controller.trueTotalMovesPlayed / controller.CurrGameNumber - 1}", regularFontSize, white);
+                    DrawNextText($"Time per Turn: {controller.trueTotalMovesPlayed / controller.CurrGameNumber - 1}", regularFontSize, white);
                 }
-                DrawNextText($"Moves per Game: {controller.trueTotalMovesPlayed / controller.CurrGameNumber - 1}", regularFontSize, white);
-
 
                 void DrawNextText(string text, int fontSize, Color col)
                 {

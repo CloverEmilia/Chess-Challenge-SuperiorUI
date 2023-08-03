@@ -21,6 +21,15 @@ namespace ChessChallenge.Application
             MyBot,
             EvilBot
         }
+        /*ChessPlayer CreatePlayer(PlayerType type)
+        {
+            return type switch
+            {
+                PlayerType.MyBot => new ChessPlayer(new MyBot(), type, GameDurationMilliseconds),
+                PlayerType.EvilBot => new ChessPlayer(new EvilBot(), type, GameDurationMilliseconds),
+                _ => new ChessPlayer(new HumanPlayer(boardUI), type)
+            };
+        } */
 
         // Game state
         readonly Random rng;
@@ -55,6 +64,9 @@ namespace ChessChallenge.Application
         readonly int tokenCount;
         readonly int debugTokenCount;
         readonly StringBuilder pgns;
+
+        int totalMovesPlayed = 0;
+        public int trueTotalMovesPlayed = 0;
 
         public ChallengeController()
         {
@@ -143,6 +155,8 @@ namespace ChessChallenge.Application
 
         Move GetBotMove()
         {
+            totalMovesPlayed++;
+            
             API.Board botBoard = new(board);
             try
             {
@@ -204,16 +218,6 @@ namespace ChessChallenge.Application
             }
         }
 
-        ChessPlayer CreatePlayer(PlayerType type)
-        {
-            return type switch
-            {
-                PlayerType.MyBot => new ChessPlayer(new MyBot(), type, GameDurationMilliseconds),
-                PlayerType.EvilBot => new ChessPlayer(new EvilBot(), type, GameDurationMilliseconds),
-                _ => new ChessPlayer(new HumanPlayer(boardUI), type)
-            };
-        }
-
         static (int totalTokenCount, int debugTokenCount) GetTokenCount()
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "src", "My Bot", "MyBot.cs");
@@ -273,6 +277,8 @@ namespace ChessChallenge.Application
 
         void EndGame(GameResult result, bool log = true, bool autoStartNextBotMatch = true)
         {
+            trueTotalMovesPlayed += totalMovesPlayed;
+            totalMovesPlayed = 0;
             if (isPlaying)
             {
                 isPlaying = false;
