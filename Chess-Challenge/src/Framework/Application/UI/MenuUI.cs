@@ -19,6 +19,10 @@ namespace ChessChallenge.Application
             //Screen Size Variables
         static readonly float amountToChangeScreenByPerButtonPress = 1.2f;
         static float screenSizeMultiplier = 1;
+            //Game Saving Variables
+        static readonly int numberOfTurnsBetweenGameSaves = 50;
+        static bool isIncrimentalGameSaveCurrentlyOn;
+        static int lastTurnSaved;
 
 
         public static void DrawButtons(ChallengeController controller)
@@ -158,16 +162,26 @@ namespace ChessChallenge.Application
             // functional buttons
             buttonPos.Y += breakSpacing;
 
-            if (NextButtonInRow("Save Games", ref buttonPos, spacing, buttonSize))
-            {
-                string pgns = controller.AllPGNs;
-                string directoryPath = Path.Combine(FileHelper.AppDataPath, "Games");
-                Directory.CreateDirectory(directoryPath);
-                string fileName = FileHelper.GetUniqueFileName(directoryPath, "games", ".txt");
-                string fullPath = Path.Combine(directoryPath, fileName);
-                File.WriteAllText(fullPath, pgns);
-                ConsoleHelper.Log("Saved games to " + fullPath, false, ConsoleColor.Blue);
+            if(isIncrimentalGameSaveCurrentlyOn){
+                if (NextButtonInRow("SAVE PGNs ON", ref buttonPos, spacing, buttonSize))
+                {
+                    isIncrimentalGameSaveCurrentlyOn = false;
+                }
+
+                if(lastTurnSaved != controller.CurrGameNumber){
+                    if(controller.CurrGameNumber % numberOfTurnsBetweenGameSaves == 0){
+                        lastTurnSaved = controller.CurrGameNumber;
+                        SaveGame();
+                    }
+                }
+            } else{
+                if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))
+                {
+                    isIncrimentalGameSaveCurrentlyOn = true;
+                }
             }
+
+
 
             if (NextButtonInRow("--- screen", ref buttonPos, spacing * .9f, buttonSize * .7f))
             {
@@ -178,6 +192,16 @@ namespace ChessChallenge.Application
             {
                 screenSizeMultiplier *= amountToChangeScreenByPerButtonPress;
                 UpdateApplicationWindowSize();
+            }
+
+            void SaveGame(){
+                string pgns = controller.AllPGNs;
+                string directoryPath = Path.Combine(FileHelper.AppDataPath, "Games");
+                Directory.CreateDirectory(directoryPath);
+                string fileName = FileHelper.GetUniqueFileName(directoryPath, "games", ".txt");
+                string fullPath = Path.Combine(directoryPath, fileName);
+                File.WriteAllText(fullPath, pgns);
+                ConsoleHelper.Log("Saved games to " + fullPath, false, ConsoleColor.Blue);
             }
 
             static void UpdateApplicationWindowSize(){
