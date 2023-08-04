@@ -21,7 +21,7 @@ namespace ChessChallenge.Application
             MyBot,
             EvilBot
         }
-        /*ChessPlayer CreatePlayer(PlayerType type)
+        ChessPlayer CreatePlayer(PlayerType type)
         {
             return type switch
             {
@@ -29,7 +29,7 @@ namespace ChessChallenge.Application
                 PlayerType.EvilBot => new ChessPlayer(new EvilBot(), type, GameDurationMilliseconds),
                 _ => new ChessPlayer(new HumanPlayer(boardUI), type)
             };
-        } */
+        }
 
         // Game state
         readonly Random rng;
