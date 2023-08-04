@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using static ChessChallenge.Application.Settings;
@@ -21,13 +22,14 @@ namespace ChessChallenge.Application
             Human,
             MyBot,
             EvilBot,
+            //ect.
         }
 
         private static readonly Dictionary<PlayerType, Type> BotTypeMap = new Dictionary<PlayerType, Type>
     {
         { PlayerType.MyBot, typeof(MyBot) },
         { PlayerType.EvilBot, typeof(EvilBot) },
-        { PlayerType.LiteBlue, typeof(LiteBlue) }
+        //ect.
     };
 
         // Game state
