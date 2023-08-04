@@ -8,6 +8,7 @@ using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using static ChessChallenge.Application.Settings;
 using static ChessChallenge.Application.ConsoleHelper;
 
@@ -19,17 +20,15 @@ namespace ChessChallenge.Application
         {
             Human,
             MyBot,
-            EvilBot
+            EvilBot,
         }
-        ChessPlayer CreatePlayer(PlayerType type)
-        {
-            return type switch
-            {
-                PlayerType.MyBot => new ChessPlayer(new MyBot(), type, GameDurationMilliseconds),
-                PlayerType.EvilBot => new ChessPlayer(new EvilBot(), type, GameDurationMilliseconds),
-                _ => new ChessPlayer(new HumanPlayer(boardUI), type)
-            };
-        }
+
+        private static readonly Dictionary<PlayerType, Type> BotTypeMap = new Dictionary<PlayerType, Type>
+    {
+        { PlayerType.MyBot, typeof(MyBot) },
+        { PlayerType.EvilBot, typeof(EvilBot) },
+        { PlayerType.LiteBlue, typeof(LiteBlue) }
+    };
 
         // Game state
         readonly Random rng;
@@ -217,7 +216,17 @@ namespace ChessChallenge.Application
                 boardUI.SetPerspective(PlayerWhite.Bot is MyBot);
             }
         }
-
+        ChessPlayer CreatePlayer(PlayerType type)
+        {
+            if (BotTypeMap.TryGetValue(type, out var botType))
+            {
+                return new ChessPlayer(Activator.CreateInstance(botType), type, GameDurationMilliseconds);
+            }
+            else
+            {
+                return new ChessPlayer(new HumanPlayer(boardUI), type);
+            }
+        }
         static (int totalTokenCount, int debugTokenCount) GetTokenCount()
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "src", "My Bot", "MyBot.cs");
