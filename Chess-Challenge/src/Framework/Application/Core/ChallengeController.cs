@@ -428,6 +428,10 @@ namespace ChessChallenge.Application
         {
             EndGame(GameResult.DrawByArbiter, log: false, autoStartNextBotMatch: false);
             botMatchGameIndex = 0;
+            totalMovesPlayed = 0;
+            trueTotalMovesPlayed = 0;
+            totalTimeTakenByBotA = 0;
+            totalTimeTakenByBotB = 0;
             string nameA = GetPlayerName(botTypeA);
             string nameB = GetPlayerName(botTypeB);
             if (nameA == nameB)

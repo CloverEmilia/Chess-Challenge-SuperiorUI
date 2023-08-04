@@ -42,11 +42,11 @@ namespace ChessChallenge.Application
                     //DrawNextText($"Draw rate: {(float)stats.NumDraws / (controller.CurrGameNumber - 1) * 100:F2}%", regularFontSize, white); //draw rate feels easy to calculate in your head from Win/Loss% and W/D/L, but, don't delete in case someone *really* wants it back for whatever reason 
                     DrawNextText($"Loss rate: {(float)stats.NumLosses / (controller.CurrGameNumber - 1) * 100:F2}%", regularFontSize, BoardUI.theme.negativeTextColor);
                     DrawNextText($"Moves per Game: {controller.trueTotalMovesPlayed / controller.CurrGameNumber - 1}", regularFontSize, BoardUI.theme.strongNeutralTextColor);
-                    DrawNextText($"Num Timeouts: {stats.NumTimeouts}", regularFontSize, BoardUI.theme.weakNeutralTextColor);
-                    DrawNextText($"Num Illegal Moves: {stats.NumIllegalMoves}", regularFontSize, BoardUI.theme.weakNeutralTextColor);
                     DrawNextText($"Time per Move: {stats.timePerTurn.ToString("F2")}", regularFontSize, BoardUI.theme.weakNeutralTextColor);
+                    DrawNextText($"Num Illegal Moves: {stats.NumIllegalMoves}", regularFontSize, BoardUI.theme.weakNeutralTextColor);
+                    DrawNextText($"Num Timeouts: {stats.NumTimeouts}", regularFontSize, BoardUI.theme.weakNeutralTextColor);
                 }
-                    
+
                 void DrawNextText(string text, int fontSize, Color col)
                 {
                     UIHelper.DrawText(text, startPos, fontSize, 1, col);
