@@ -52,6 +52,8 @@ namespace ChessChallenge.Application
         public BotMatchStats BotStatsA { get; private set; }
         public BotMatchStats BotStatsB {get;private set;}
         bool botAPlaysWhite;
+        float totalTimeTakenByBotA;
+        float totalTimeTakenByBotB;
 
 
         // Bot task
@@ -364,6 +366,14 @@ namespace ChessChallenge.Application
                     stats.NumTimeouts += (result is GameResult.WhiteTimeout or GameResult.BlackTimeout) ? 1 : 0;
                     stats.NumIllegalMoves += (result is GameResult.WhiteIllegalMove or GameResult.BlackIllegalMove) ? 1 : 0;
                 }
+
+                if(isWhiteStats){
+                    totalTimeTakenByBotA -= (PlayerWhite.TimeRemainingMs - GameDurationMilliseconds);
+                    stats.timePerTurn = totalTimeTakenByBotA / (trueTotalMovesPlayed / 2);
+                } else{
+                    totalTimeTakenByBotB -= (PlayerBlack.TimeRemainingMs - GameDurationMilliseconds);
+                    stats.timePerTurn = totalTimeTakenByBotB / (trueTotalMovesPlayed / 2);
+                }
             }
         }
 
@@ -463,6 +473,7 @@ namespace ChessChallenge.Application
             public int NumDraws;
             public int NumTimeouts;
             public int NumIllegalMoves;
+            public float timePerTurn;
 
             public BotMatchStats(string name) => BotName = name;
         }
