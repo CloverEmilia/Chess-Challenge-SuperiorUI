@@ -17,8 +17,8 @@ namespace ChessChallenge.Application
         static readonly int botsPerTab = 12; // Number of bots per tab
         static int currentTab = 0; // Current tab index
             //Screen Size Variables
-        static float screenSizeMultiplier = 1; 
-        static float amountToChangeScreenByPerButtonPress = 1.2f;
+        static readonly float amountToChangeScreenByPerButtonPress = 1.2f;
+        static float screenSizeMultiplier = 1;
 
 
         public static void DrawButtons(ChallengeController controller)
@@ -32,14 +32,14 @@ namespace ChessChallenge.Application
                 //Bot Selection variable declaration
             Vector2 selectionTextStartingPosition = new(buttonPos.X * .5f ,buttonPos.Y * .6f);
             Vector2 playerTwoOffsetPosition = Vector2.UnitY * buttonPos.Y * -0.3f; //I should make this normal-er
-            int selectionTextSize = 16;
-            int selectionTextSpacing = 1;
+            int selectionTextSize = UIHelper.ScaleInt(32);
+            int selectionTextSpacing = UIHelper.ScaleInt(1);
 
             //Draw the UI for bot selection
-            UIHelper.DrawText("Player 1: " + selectedBotA, selectionTextStartingPosition, selectionTextSize, selectionTextSpacing, selectingBotBAndNotA ? Color.GRAY : Color.GREEN);
-            UIHelper.DrawText("Player 2: " + selectedBotB, selectionTextStartingPosition + playerTwoOffsetPosition, selectionTextSize, selectionTextSpacing, !selectingBotBAndNotA ? Color.GRAY : Color.GREEN);
+            UIHelper.DrawText("Player 1: " + selectedBotA, selectionTextStartingPosition, selectionTextSize, selectionTextSpacing, selectingBotBAndNotA ? BoardUI.theme.weakNeutralTextColor : BoardUI.theme.positiveTextColor);
+            UIHelper.DrawText("Player 2: " + selectedBotB, selectionTextStartingPosition + playerTwoOffsetPosition, selectionTextSize, selectionTextSpacing, !selectingBotBAndNotA ? BoardUI.theme.weakNeutralTextColor : BoardUI.theme.positiveTextColor);
             //and the tabs
-            UIHelper.DrawText("tab: " + (currentTab + 1)+ "/" + ((int)(playerArray.Length / botsPerTab)+1), buttonPos * 1.55f + Vector2.UnitY * buttonPos.Y * -0.3f, 20, 1, Color.GRAY); //gods help me this allignment is painful, it doesn't matter for now
+            UIHelper.DrawText("tab: " + (currentTab + 1)+ "/" + ((int)(playerArray.Length / botsPerTab)+1), buttonPos * 1.55f + Vector2.UnitY * buttonPos.Y * -0.3f, selectionTextSize, selectionTextSpacing, BoardUI.theme.weakNeutralTextColor); //gods help me this allignment is painful, it doesn't matter for now
 
 
                 //Tab management (this might be garbage)
@@ -145,18 +145,15 @@ namespace ChessChallenge.Application
 
             // Resources/External buttons
             buttonPos.Y += breakSpacing;
-            if (NextButtonInRow("See Rules", ref buttonPos, spacing, buttonSize * .7f))
+            if (NextButtonInRow("rules", ref buttonPos, spacing, buttonSize * .7f))
             {
                 FileHelper.OpenUrl("https://github.com/SebLague/Chess-Challenge");
             }
-            if (NextButtonInRow("See Docs", ref buttonPos, spacing, buttonSize * .7f))
+            if (NextButtonInRow("api", ref buttonPos, spacing, buttonSize * .7f))
             {
                 FileHelper.OpenUrl("https://seblague.github.io/chess-coding-challenge/documentation/");
             }
-            if (NextButtonInRow("Submit", ref buttonPos, spacing, buttonSize * .7f))
-            {
-                FileHelper.OpenUrl("https://forms.gle/6jjj8jxNQ5Ln53ie6");
-            }
+
 
             // functional buttons
             buttonPos.Y += breakSpacing;

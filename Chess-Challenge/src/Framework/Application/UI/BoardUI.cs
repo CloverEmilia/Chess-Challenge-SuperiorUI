@@ -17,11 +17,6 @@ namespace ChessChallenge.Application
         const double moveAnimDuration = 0.15;
         bool whitePerspective = true;
 
-        // Text colours
-        static readonly Color activeTextCol = new(200, 200, 200, 255);
-        static readonly Color inactiveTextCol = new(100, 100, 100, 255);
-        static readonly Color nameCol = new(67, 204, 101, 255);
-
         // Bitboard debug mode
         static readonly Color bitboardColZERO = new(61, 121, 217, 200);
         static readonly Color bitboardColONE = new(252, 43, 92, 200);
@@ -37,7 +32,7 @@ namespace ChessChallenge.Application
 
         static readonly int[] pieceImageOrder = { 5, 3, 2, 4, 1, 0 };
         Texture2D piecesTexture;
-        BoardTheme theme;
+        public static BoardTheme theme;
         Dictionary<int, Color> squareColOverrides;
         Board board;
         Move lastMove;
@@ -67,8 +62,8 @@ namespace ChessChallenge.Application
             board = new Board();
             board.LoadStartPosition();
             squareColOverrides = new Dictionary<int, Color>();
-            topTextCol = inactiveTextCol;
-            bottomTextCol = inactiveTextCol;
+            topTextCol = theme.weakNeutralTextColor;
+            bottomTextCol = theme.weakNeutralTextColor;
         }
 
         public void SetPerspective(bool whitePerspective)
@@ -237,8 +232,8 @@ namespace ChessChallenge.Application
 
         void UpdateMoveAnimation(double animT)
         {
-            Coord startCoord = new Coord(moveToAnimate.StartSquareIndex);
-            Coord targetCoord = new Coord(moveToAnimate.TargetSquareIndex);
+            Coord startCoord = new(moveToAnimate.StartSquareIndex);
+            Coord targetCoord = new(moveToAnimate.TargetSquareIndex);
             Vector2 startPos = GetSquarePos(startCoord.fileIndex, startCoord.rankIndex, whitePerspective);
             Vector2 targetPos = GetSquarePos(targetCoord.fileIndex, targetCoord.rankIndex, whitePerspective);
 
@@ -263,8 +258,8 @@ namespace ChessChallenge.Application
             const int spaceY = 35;
 
 
-            Color textTopTargetCol = topTurnToMove ? activeTextCol : inactiveTextCol;
-            Color textBottomTargetCol = bottomTurnToMove ? activeTextCol : inactiveTextCol;
+            Color textTopTargetCol = topTurnToMove ? theme.strongNeutralTextColor : theme.weakNeutralTextColor;
+            Color textBottomTargetCol = bottomTurnToMove ? theme.strongNeutralTextColor : theme.weakNeutralTextColor;
 
             float colLerpSpeed = 16;
             topTextCol = LerpColour(topTextCol, textTopTargetCol, Raylib.GetFrameTime() * colLerpSpeed);
@@ -277,11 +272,11 @@ namespace ChessChallenge.Application
 
             void Draw(float y, string colName, string name, int timeMs, Color textCol)
             {
-                const int fontSize = 36;
-                const int fontSpacing = 1;
+                int fontSize = UIHelper.ScaleInt(64);
+                int fontSpacing = UIHelper.ScaleInt(1);
                 var namePos = new Vector2(boardStartX, y);
 
-                UIHelper.DrawText($"{colName}: {name}", namePos, fontSize, fontSpacing, nameCol);
+                UIHelper.DrawText($"{colName}: {name}", namePos, fontSize, fontSpacing, theme.positiveTextColor);
                 var timePos = new Vector2(boardStartX + squareSize * 8, y);
                 string timeText;
                 if (timeMs == int.MaxValue)
@@ -322,7 +317,7 @@ namespace ChessChallenge.Application
         void DrawSquare(int file, int rank)
         {
 
-            Coord coord = new Coord(file, rank);
+            Coord coord = new(file, rank);
             Color col = coord.IsLightSquare() ? theme.LightCol : theme.DarkCol;
             if (squareColOverrides.TryGetValue(coord.SquareIndex, out Color overrideCol))
             {
@@ -396,9 +391,9 @@ namespace ChessChallenge.Application
                 int type = PieceHelper.PieceType(piece);
                 bool white = PieceHelper.IsWhite(piece);
                 Rectangle srcRect = GetPieceTextureRect(type, white);
-                Rectangle targRect = new Rectangle((int)posTopLeft.X, (int)posTopLeft.Y, squareSize, squareSize);
+                Rectangle targRect = new((int)posTopLeft.X, (int)posTopLeft.Y, squareSize, squareSize);
 
-                Color tint = new Color(255, 255, 255, (int)MathF.Round(255 * alpha));
+                Color tint = new(255, 255, 255, (int)MathF.Round(255 * alpha));
                 Raylib.DrawTexturePro(piecesTexture, srcRect, targRect, new Vector2(0, 0), 0, tint);
             }
         }
