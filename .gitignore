@@ -399,3 +399,4 @@ FodyWeavers.xsd
 *.sln.iml
 .vscode/launch.json
 .vscode/tasks.json
+Chess-Challenge/src/Framework/Application/Helpers/SetDirectoriesChecker.cs
