@@ -33,10 +33,10 @@ namespace ChessChallenge.Application
     };
 
         // Game state
+        public Board board; //I am sorry for making this public, should this not be public? https://imgur.com/a/PsgtdWw
         readonly Random rng;
         int gameID;
         bool isPlaying;
-        Board board;
         public ChessPlayer PlayerWhite { get; private set; }
         public ChessPlayer PlayerBlack {get;private set;}
 
@@ -71,6 +71,7 @@ namespace ChessChallenge.Application
         int totalMovesPlayed = 0;
         public int trueTotalMovesPlayed = 0;
 
+
         public ChallengeController()
         {
             Log($"Launching Chess-Challenge version {Settings.Version}");
@@ -82,6 +83,7 @@ namespace ChessChallenge.Application
             boardUI = new BoardUI();
             board = new Board();
             pgns = new();
+            EvalBarUI.InitializeStockfish();
 
             BotStatsA = new BotMatchStats("IBot");
             BotStatsB = new BotMatchStats("IBot");
