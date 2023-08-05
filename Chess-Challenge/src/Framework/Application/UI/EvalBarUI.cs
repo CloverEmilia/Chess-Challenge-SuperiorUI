@@ -4,8 +4,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using System.Reflection;
-using System.CodeDom;
 
 namespace ChessChallenge.Application
 {
@@ -17,7 +15,6 @@ namespace ChessChallenge.Application
         static int evalBarSizeY = 847; //I hate this number
         public static void DrawEvalBar(ChallengeController controller)
         {
-            CodeCompileUnit compileUnit = new CodeCompileUnit();
 
             //place a black rectangle over the entire area and then cover with white what's actually needed
             Raylib.DrawRectangle(UIHelper.ScaleInt(evalBarPositionX), UIHelper.ScaleInt(evalBarPositionY), UIHelper.ScaleInt(evalBarSizeX), UIHelper.ScaleInt(evalBarSizeY), BoardUI.theme.weakNeutralTextColor);
