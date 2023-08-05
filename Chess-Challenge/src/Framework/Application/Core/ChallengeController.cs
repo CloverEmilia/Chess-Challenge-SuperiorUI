@@ -182,6 +182,8 @@ namespace ChessChallenge.Application
 
         void NotifyTurnToMove()
         {
+            MaterialDiffUI.UpdateMaterialDiff(board);
+
             //playerToMove.NotifyTurnToMove(board);
             if (PlayerToMove.IsHuman)
             {

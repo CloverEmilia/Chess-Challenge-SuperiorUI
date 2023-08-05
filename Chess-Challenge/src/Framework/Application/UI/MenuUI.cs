@@ -190,7 +190,7 @@ namespace ChessChallenge.Application
             if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))
             {
                 //isIncrimentalGameSaveCurrentlyOn = true;
-                SaveGame();
+                //SaveGame();
             }
             //}
 
