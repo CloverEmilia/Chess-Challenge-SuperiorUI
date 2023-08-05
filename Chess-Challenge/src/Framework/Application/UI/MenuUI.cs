@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
+using ChessChallenge.Application;
 
 namespace ChessChallenge.Application
 {
@@ -28,8 +29,9 @@ namespace ChessChallenge.Application
                                    //Screen Size Variables
         static readonly float amountToChangeScreenByPerButtonPress = 1.2f;
         static float screenSizeMultiplier = 1;
-        //Game Saving Variables
+            //Game Saving Variables
         static readonly int numberOfTurnsBetweenGameSaves = 50;
+        public static readonly string customSaveFilePath = @"C:\replace this with your desired directory, goes to documents by default";
         static bool isIncrimentalGameSaveCurrentlyOn;
         static int lastTurnSaved;
 
@@ -213,16 +215,14 @@ namespace ChessChallenge.Application
                 //in that file append or create a .txt with the game results.
                 foreach (string examinedpgn in controller.listOfPgns)
                 {
-                    //if (GetWhitePlayerName(examinedpgn) != "Human")
-                    //{
-                        //Assembly s = GetAssemblyFromPlayerType(GetPlayerTypeFromName(GetWhitePlayerName(examinedpgn)));
-                        //Console.WriteLine(s);
-                        //string uniqueBotID = GetSHA256Hash(GetAssemblyFromPlayerType(GetPlayerTypeFromName(GetWhitePlayerName(examinedpgn))));
-                        //Console.WriteLine(uniqueBotID);
-                    //}
-                }
-                //for now, just pass in fake variables and pretend that we have this part working
-                
+                    if (SavePgnsToDisk.GetPlayerName(examinedpgn, true) != "Human" || SavePgnsToDisk.GetPlayerName(examinedpgn, false) != "Human")
+                    {
+                        string nameOfBotA = SavePgnsToDisk.GetPlayerName(examinedpgn, true);
+                        string nameOfBotB = SavePgnsToDisk.GetPlayerName(examinedpgn, false);
+                        SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotA);
+                        SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotB);
+                    }
+                }                
             }
 
             static void UpdateApplicationWindowSize()
