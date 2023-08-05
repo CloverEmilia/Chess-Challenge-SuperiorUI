@@ -51,7 +51,7 @@ namespace ChessChallenge.Application
             Stockfish.NET.Models.Settings stockfishSettings = new Stockfish.NET.Models.Settings();
             stockfishSettings.SkillLevel = STOCKFISH_LEVEL;
             int depth = 2; // Set your desired depth value here
-            mStockFish = new Stockfish.NET.Stockfish(DirectoriesSetLocation.stockFishDirectory, depth, stockfishSettings);
+            mStockFish = new Stockfish.NET.Stockfish(@"C:\Users\Clover\Desktop\stockfish_20090216_x64.exe", depth, stockfishSettings);
         }
     }
 }
