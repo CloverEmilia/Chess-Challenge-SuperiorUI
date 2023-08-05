@@ -29,8 +29,8 @@ namespace ChessChallenge.Application
 
             tempTestVariable++;
             if(tempTestVariable > 1000){
-                GetStockfishEval(controller, controller.board, 1);
-
+                //GetStockfishEval(controller, controller.board, 1);
+                tempTestVariable = 0;
             }
         }
 
