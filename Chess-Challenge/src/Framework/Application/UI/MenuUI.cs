@@ -2,9 +2,11 @@
     using System.Numerics;
     using System;
     using System.IO;
-    
+using ChessChallenge.Chess;
+using System.Text.RegularExpressions;
+using static ChessChallenge.Application.ChallengeController;
 
-    namespace ChessChallenge.Application
+namespace ChessChallenge.Application
     {
         public static class MenuUI
         {
@@ -196,16 +198,58 @@
                 }
 
                 void SaveGame(){
+                    //for each pgn in pgns
+                    //create or open a folder with the name of white and then black
+                    //create or open a file with the name of the hash of the bot
+                    //in that file append or create a .txt with the game results.
+                    foreach (string examinedpgn in controller.listOfPgns){
+                        GetAssemblyFromPlayerType(GetPlayerTypeFromName(GetWhitePlayerName(examinedpgn)));
+                    }
+
                     string pgns = controller.AllPGNs;
                     string directoryPath = Path.Combine(FileHelper.AppDataPath, "Games");
-                    Directory.CreateDirectory(directoryPath);
+                Directory.CreateDirectory(directoryPath);
                     string fileName = FileHelper.GetUniqueFileName(directoryPath, "games", ".txt");
                     string fullPath = Path.Combine(directoryPath, fileName);
                     File.WriteAllText(fullPath, pgns);
                     ConsoleHelper.Log("Saved games to " + fullPath, false, ConsoleColor.Blue);
                 }
 
-                static void UpdateApplicationWindowSize(){
+            static string GetWhitePlayerName(string pgn)
+            {
+                // Define the regular expression pattern to match [White "Player Name"]
+                string pattern = @"\[White ""(.*?)""\]";
+                // Use Regex.Match to find the first match of the pattern in the string
+                Match match = Regex.Match(pgn, pattern);
+                // If a match is found and there is a captured group, return the player name
+                if (match.Success && match.Groups.Count >= 2)
+                {
+                    return match.Groups[1].Value;
+                }
+                // Return an empty string if no match is found or the captured group is not available
+                return string.Empty;
+            }
+
+            PlayerType GetPlayerTypeFromName(string playerName)
+            {
+                if (Enum.TryParse<PlayerType>(playerName, out var playerType))
+                {
+                    return playerType;
+                }
+                return PlayerType.Human; // or any default value you prefer if the name doesn't match any PlayerType
+            }
+
+            System.Reflection.Assembly GetAssemblyFromPlayerType(PlayerType playerType)
+            {
+                if (BotTypeMap.TryGetValue(playerType, out var botType))
+                {
+                    System.Reflection.Assembly assembly = botType.Assembly;
+                    return assembly;
+                }
+                return null; //no brain head empty
+            }
+
+            static void UpdateApplicationWindowSize(){
                 Program.SetWindowSize(new Vector2(Settings.defaultScreenX, Settings.defaultScreenY) * screenSizeMultiplier);
                 }
                 if (NextButtonInRow("Exit (ESC)", ref buttonPos, spacing, buttonSize))

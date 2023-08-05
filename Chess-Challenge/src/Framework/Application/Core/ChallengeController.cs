@@ -24,7 +24,7 @@ namespace ChessChallenge.Application
             //ect.
         }
 
-        private static readonly Dictionary<PlayerType, Type> BotTypeMap = new Dictionary<PlayerType, Type>
+        public static readonly Dictionary<PlayerType, Type> BotTypeMap = new Dictionary<PlayerType, Type>
     {
         { PlayerType.MyBot, typeof(MyBot) },
         { PlayerType.EvilBot, typeof(EvilBot) },
@@ -65,7 +65,8 @@ namespace ChessChallenge.Application
         readonly MoveGenerator moveGenerator;
         readonly int tokenCount;
         readonly int debugTokenCount;
-        readonly StringBuilder pgns;
+        readonly StringBuilder pgns; //what *are* you?
+        public readonly List<string> listOfPgns = new(); //I am like you, but better.
 
         int totalMovesPlayed = 0;
         public int trueTotalMovesPlayed = 0;
@@ -305,6 +306,7 @@ namespace ChessChallenge.Application
                 }
 
                 string pgn = PGNCreator.CreatePGN(board, result, GetPlayerName(PlayerWhite), GetPlayerName(PlayerBlack));
+                listOfPgns.Add(pgn);
                 pgns.AppendLine(pgn);
 
                 // If 2 bots playing each other, start next game automatically.
