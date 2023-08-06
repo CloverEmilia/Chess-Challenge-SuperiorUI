@@ -54,7 +54,7 @@ namespace ChessChallenge.Application
             UIHelper.DrawText("Player 1: " + selectedBotA, selectionTextStartingPosition, selectionTextSize, selectionTextSpacing, selectingBotBAndNotA ? BoardUI.theme.weakNeutralTextColor : BoardUI.theme.positiveTextColor);
             UIHelper.DrawText("Player 2: " + selectedBotB, selectionTextStartingPosition + playerTwoOffsetPosition, selectionTextSize, selectionTextSpacing, !selectingBotBAndNotA ? BoardUI.theme.weakNeutralTextColor : BoardUI.theme.positiveTextColor);
             //and the tabs
-            UIHelper.DrawText("tab: " + (currentTab + 1) + "/" + ((int)(playerArray.Length / botsPerTab) + 1), buttonPos * 1.55f + Vector2.UnitY * buttonPos.Y * -0.3f, selectionTextSize, selectionTextSpacing, BoardUI.theme.weakNeutralTextColor); //gods help me this allignment is painful, it doesn't matter for now
+            UIHelper.DrawText("tab: " +Environment.NewLine + (currentTab + 1) + "/" + ((int)(playerArray.Length / botsPerTab) + 1), buttonPos * 1.55f + Vector2.UnitY * buttonPos.Y * -0.3f, selectionTextSize, selectionTextSpacing, BoardUI.theme.weakNeutralTextColor); //gods help me this allignment is painful, it doesn't matter for now
 
 
             //Tab management (this might be garbage)
@@ -190,7 +190,7 @@ namespace ChessChallenge.Application
             if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))
             {
                 //isIncrimentalGameSaveCurrentlyOn = true;
-                //SaveGame();
+                SaveGame();
             }
             //}
 

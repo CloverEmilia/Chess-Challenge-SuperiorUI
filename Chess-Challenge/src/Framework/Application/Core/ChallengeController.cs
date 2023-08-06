@@ -21,14 +21,19 @@ namespace ChessChallenge.Application
             Human,
             MyBot,
             EvilBot,
+            NegamaxBasic,
+            AdvancedNegamax,
             //ect.
         }
 
         public static readonly Dictionary<PlayerType, Type> BotTypeMap = new Dictionary<PlayerType, Type>
     {
+        //_ => new ChessPlayer(new HumanPlayer(boardUI), type) I removed this line at some point and I don't know why, but re-adding it now throws an error
         { PlayerType.MyBot, typeof(MyBot) },
         { PlayerType.EvilBot, typeof(EvilBot) },
-        //ect.
+        { PlayerType.NegamaxBasic, typeof(NegamaxBasic) },
+        { PlayerType.AdvancedNegamax, typeof(AdvancedNegamax) },
+        //ect.  
     };
 
         // Game state

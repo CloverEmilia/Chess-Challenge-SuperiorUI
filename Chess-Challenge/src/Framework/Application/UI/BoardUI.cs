@@ -275,14 +275,15 @@ namespace ChessChallenge.Application
                 int fontSize = UIHelper.ScaleInt(64);
                 int fontSpacing = UIHelper.ScaleInt(1);
                 var namePos = new Vector2(boardStartX, y);
-
-                UIHelper.DrawText($"{colName}: {name}", namePos, fontSize, fontSpacing, theme.positiveTextColor);
-                var timePos = new Vector2(boardStartX + squareSize * 8, y);
+                //this is probably fine
+                Raylib.DrawRectangle((int)namePos.X - UIHelper.ScaleInt(16), (int)namePos.Y - UIHelper.ScaleInt(48), (int)UIHelper.Scale((Raylib.MeasureText($"{name}", fontSize) * 2.2f)), UIHelper.ScaleInt(95), theme.BorderCol);
+                UIHelper.DrawText($"{name}", namePos, fontSize, fontSpacing, colName == "White" ? theme.strongNeutralTextColor : Color.BLACK); //I feel like it should be white, but, it just feels a smidge too much, idk
+                var timePos = new Vector2(boardStartX + squareSize * 6.5f, y); //the .x here is fake, we set it later, I don't feel like fixing when I'll have to overhaul this entire thing when I have time
                 string timeText;
                 if (timeMs == int.MaxValue)
                 {
-                    timeText = "Time: Unlimited";
-                }
+                    timeText = "T:Unlimited";
+                }   
                 else
                 {
                     double secondsRemaining = timeMs / 1000.0;
@@ -290,9 +291,10 @@ namespace ChessChallenge.Application
                     int numSeconds = (int)(secondsRemaining - numMinutes * 60);
                     int dec = (int)((secondsRemaining - numMinutes * 60 - numSeconds) * 10);
 
-                    timeText = $"Time: {numMinutes:00}:{numSeconds:00}.{dec}";
+                    timeText = $"T:{numMinutes:00}:{numSeconds:00}.{dec}";
                 }
-                UIHelper.DrawText(timeText, timePos, fontSize, fontSpacing, textCol, UIHelper.AlignH.Right);
+                timePos.X = UIHelper.Scale(-600) + UIHelper.Scale((Raylib.MeasureText($"{name}", fontSize) * 1.2f));
+                UIHelper.DrawText(timeText, timePos, fontSize, fontSpacing, textCol, UIHelper.AlignH.Left);
             }
         }
 
