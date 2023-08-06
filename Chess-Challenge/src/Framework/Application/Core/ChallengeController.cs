@@ -423,7 +423,7 @@ namespace ChessChallenge.Application
         {
             BotBrainCapacityUI.Draw(tokenCount, debugTokenCount, MaxTokenCount);
             MenuUI.DrawButtons(this);
-            MaterialDiffUI.DrawMaterialDiff(this);
+            MaterialDiffUI.DrawMaterialDiff(this, boardUI);
             EvalBarUI.DrawEvalBar(this);
             MatchStatsUI.DrawMatchStats(this);
         }

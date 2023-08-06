@@ -383,8 +383,7 @@ namespace ChessChallenge.Application
             int posY = boardStartY + (7 - rank) * squareSize;
             return new Vector2(posX, posY);
         }
-
-        void DrawPiece(int piece, Vector2 posTopLeft, float alpha = 1)
+        public void DrawPiece(int piece, Vector2 posTopLeft, float alpha = 1)
         {
             if (piece != PieceHelper.None)
             {
