@@ -309,7 +309,17 @@ namespace ChessChallenge.Application
 
                 if (log)
                 {
-                    Log("Game Over: " + result, false, ConsoleColor.Blue);
+                        //Adds the name of the bot to the result, for easy identification
+                    string adjustedResults = result.ToString();
+                    if(adjustedResults.Contains("Black")){
+                        adjustedResults = PlayerBlack.Bot.ToString() + "" + adjustedResults;
+                    }
+                    if (adjustedResults.Contains("White"))
+                    {
+                        adjustedResults = PlayerWhite.Bot.ToString() + "" + adjustedResults;
+                    }
+
+                    Log("Game Over: " + adjustedResults, false, ConsoleColor.Blue);
                 }
 
                 string pgn = PGNCreator.CreatePGN(board, result, GetPlayerName(PlayerWhite), GetPlayerName(PlayerBlack));

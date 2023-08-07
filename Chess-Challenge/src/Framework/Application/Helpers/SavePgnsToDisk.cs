@@ -24,18 +24,25 @@ namespace ChessChallenge.Application
                 string directoryPath;
             if (MenuUI.customSaveFilePath == @"C:\replace this with your desired directory, goes to documents by default")
             {
-                directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
             else
             {
                 directoryPath = MenuUI.customSaveFilePath;
             }
 
-            string scriptHash = "for now just hardcoded";
-            directoryPath = Path.Combine(directoryPath, "ChessChallenge/" + innerFilePath);
-            directoryPath = Path.Combine(directoryPath, scriptHash + ".txt");
+            string scriptHash = "for now just hardcodedInsteadOfRealHash";
+            directoryPath = Path.Combine(directoryPath, "ChessChallenge-SUI/" + innerFilePath);
             Directory.CreateDirectory(directoryPath);
-            File.AppendAllText(directoryPath, pgnToSave);
+            try
+            {
+                File.AppendAllText(Path.Combine(directoryPath, scriptHash + ".txt"), pgnToSave);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                // Handle the exception, e.g., log the error, show an error message, etc.
+                Console.WriteLine("Error: " + ex.Message);
+            }
 
             /* old save system
             string fileName = FileHelper.GetUniqueFileName(directoryPath, "games", ".txt");

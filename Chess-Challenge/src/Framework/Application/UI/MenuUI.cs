@@ -215,14 +215,13 @@ namespace ChessChallenge.Application
                 //in that file append or create a .txt with the game results.
                 foreach (string examinedpgn in controller.listOfPgns)
                 {
-                    if (SavePgnsToDisk.GetPlayerName(examinedpgn, true) != "Human" || SavePgnsToDisk.GetPlayerName(examinedpgn, false) != "Human")
-                    {
-                        string nameOfBotA = SavePgnsToDisk.GetPlayerName(examinedpgn, true);
-                        string nameOfBotB = SavePgnsToDisk.GetPlayerName(examinedpgn, false);
-                        SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotA);
-                        SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotB);
-                    }
-                }                
+                    string nameOfBotA = SavePgnsToDisk.GetPlayerName(examinedpgn, true);
+                    string nameOfBotB = SavePgnsToDisk.GetPlayerName(examinedpgn, false);
+
+                    SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotA);
+                    SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotB);
+                }
+                controller.listOfPgns.Clear(); //clear out the list so we don't save the same game again
             }
 
             static void UpdateApplicationWindowSize()

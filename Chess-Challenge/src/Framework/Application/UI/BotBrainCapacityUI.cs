@@ -18,7 +18,6 @@ namespace ChessChallenge.Application
             Raylib.DrawRectangle(0, screenHeight - height, screenWidth, height, theme.BorderCol);
             // Bar
             double t = (double)activeTokenCount / tokenLimit;
-            t = .7;
 
             Color col;
             col = LerpRGB(theme.positiveTextColor, theme.negativeTextColor, (float)t);
