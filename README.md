@@ -1,4 +1,6 @@
 # Chess Coding Challenge SuperiorUI
+# NOTICE, this is currently pre-release, you're welcome to use it, but, this information is not guarenteed to be correct, and anything may change at any time.
+
 
 ## Features
 -Entirely reworked and unified UI
@@ -46,6 +48,8 @@
 -Eval Bar broke-y okey, should in theory work but I haven't been able to get someone to confirm if there's an issue with my implimentation or something purely on my end
 
 -Fast Forward hangs the client, this isn't anything new to my mod but it is something I'm hoping to band-aid it by dropping out of it every few seconds for a short bit.
+
+-BoardUI doesn't scale correctly (need to raylib.scaleint each value only once)
 
 -Hashing for bots is broken, but I know how to fix it, just need to get around to it
 
