@@ -7,7 +7,7 @@
 
 -Extremely simplified process for adding and playing bots (see the .txt in MyBot), featuring a codeless, infinitely scrolling bot selector
 
--Tourneyment mode for automatically running 
+-Tourneyment mode for automatically running round-robin style comparison of all currently installed bots
 
 -Stockfish evaluation bar (//see known issues)
 
