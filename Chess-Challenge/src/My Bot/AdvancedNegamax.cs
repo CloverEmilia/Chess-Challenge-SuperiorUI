@@ -97,7 +97,7 @@ public class AdvancedNegamax : IChessBot
 
         // Search moves
         for(int i = 0; i < moves.Length; i++) {
-            if(timer.MillisecondsElapsedThisTurn >= timer.MillisecondsRemaining / 30) return 30000;
+            if(timer.MillisecondsElapsedThisTurn >= timer.MillisecondsRemaining / 200) return 30000;
 
             // Incrementally sort moves
             for(int j = i + 1; j < moves.Length; j++) {

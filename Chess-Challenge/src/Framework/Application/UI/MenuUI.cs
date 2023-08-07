@@ -156,7 +156,11 @@ namespace ChessChallenge.Application
                 controller.StartNewBotMatch(selectedBotA, selectedBotB);
             }
 
-
+            if (NextButtonInRow("Start Tournament", ref buttonPos, spacing, buttonSize))
+            {
+                controller.isTournamentActive = true;
+                controller.StartNewBotMatch((PlayerType)1, (PlayerType)1);
+            }
 
             // Resources/External buttons
             buttonPos.Y += breakSpacing;
@@ -173,26 +177,16 @@ namespace ChessChallenge.Application
             // functional buttons
             buttonPos.Y += breakSpacing;
 
-            /*
-            if(isIncrimentalGameSaveCurrentlyOn){
-                if (NextButtonInRow("SAVE PGNs ON", ref buttonPos, spacing, buttonSize))
-                {
-                    isIncrimentalGameSaveCurrentlyOn = false;
-                }
+            if (NextButtonInRow("(broke)fast forward", ref buttonPos, spacing, buttonSize))
+            {
+                //
+            }
 
-                if(lastTurnSaved != controller.CurrGameNumber){
-                    if(controller.CurrGameNumber % numberOfTurnsBetweenGameSaves == 0){
-                        lastTurnSaved = controller.CurrGameNumber;
-                        SaveGame();
-                    }
-                }
-            } else{ */
             if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))
             {
                 //isIncrimentalGameSaveCurrentlyOn = true;
                 SaveGame();
             }
-            //}
 
 
 

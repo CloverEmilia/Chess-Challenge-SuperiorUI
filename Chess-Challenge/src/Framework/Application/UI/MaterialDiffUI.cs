@@ -22,67 +22,54 @@ namespace ChessChallenge.Application
         public static List<int> startingPieces = new();
         public static List<int> blackPiecesTakenbyWhite = new();
         public static List<int> whitePiecesTakenbyBlack = new();
-        public static List<int> blackPiecesLastFrame = new();
-        public static List<int> whitePiecesLastFrame = new();
         public static List<int> matchingPieces = new();
         public static List<int> blackPiecesActuallyDisplayed = new();
         public static List<int> whitePiecesActuallyDisplayed = new();
-        static string currentlyExploredFenString = "hehe "; //any string to stop null reference, feel free to insert you own silly little phrase, I won't mind🤗
+        public static string currentlyExploredFenString = "hehe "; //any string to stop null reference, feel free to insert you own silly little phrase, I won't mind🤗
         private static BoardUI boardUI = new BoardUI();
-
-        public static void InitializeStartingPieces()
-        {
-                for (int pawns = 0; pawns < 8; pawns++)
-                {
-                    startingPieces.Add(1);
-                }
-                for (int knights = 0; knights < 2; knights++)
-                {
-                    startingPieces.Add(2);
-                }
-                for (int bishops = 0; bishops < 2; bishops++)
-                {
-                    startingPieces.Add(3);
-                }
-                for (int Rooks = 0; Rooks < 2; Rooks++)
-                {
-                    startingPieces.Add(4);
-                }
-                for (int Queens = 0; Queens < 1; Queens++)
-                {
-                    startingPieces.Add(5);
-                }
-                for (int Kings = 0; Kings < 1; Kings++)
-                {
-                    startingPieces.Add(6);
-                }
-        }
 
         public static void DrawMaterialDiff(Application.ChallengeController controller, BoardUI boardUI)
         {
-            //Console.WriteLine("2 " + blackPiecesTakenbyWhite.Count);
-            //Console.WriteLine("1 " + whitePiecesTakenbyBlack.Count);
-
+                //Calculate Material Difference
             if (startingPieces.Any(piece => piece > 1))
             {
             } else{
                 InitializeStartingPieces();
             }
+            CalculateMaterialDiff();
+            
+            /*blackPiecesActuallyDisplayed = startingPieces;
+            whitePiecesActuallyDisplayed = startingPieces;
 
-                //Calculate diff
-                CalculateMaterialDiff();
-                //Draw the material display itself
+
+            blackPiecesActuallyDisplayed = startingPieces.Except(blackPiecesTakenbyWhite).ToList();
+            blackPiecesActuallyDisplayed = startingPieces.Except(whitePiecesTakenbyBlack).ToList();
+            //Subtract Matching Pieces
+            matchingPieces = blackPiecesTakenbyWhite.Intersect(whitePiecesTakenbyBlack).ToList();
+            foreach (int tradedPiece in matchingPieces)
+            {
+                blackPiecesActuallyDisplayed.Remove(tradedPiece);
+                whitePiecesActuallyDisplayed.Remove(tradedPiece);
+            }
+
+            Console.WriteLine("B " +blackPiecesActuallyDisplayed.Count);
+            Console.WriteLine("W " + whitePiecesActuallyDisplayed.Count);
+
+
             foreach (int pieceTypeValueInteger in blackPiecesActuallyDisplayed)
             {
                 boardUI.DrawPiece(pieceTypeValueInteger, Vector2.One * 50, 1);
             }
             foreach (int pieceTypeValueInteger in whitePiecesActuallyDisplayed)
             {
-                boardUI.DrawPiece (pieceTypeValueInteger, Vector2.One * 50, 1);
+                boardUI.DrawPiece(pieceTypeValueInteger, Vector2.One * 50, 1);
             }
 
-                //If the calculation changed something
-            if (blackPiecesTakenbyWhite != blackPiecesLastFrame || whitePiecesTakenbyBlack != whitePiecesLastFrame){
+
+
+
+
+                /*
                     //Update piece comparison variables
                 blackPiecesLastFrame = blackPiecesTakenbyWhite;
                 whitePiecesLastFrame = whitePiecesTakenbyBlack;
@@ -91,12 +78,7 @@ namespace ChessChallenge.Application
                 blackPiecesActuallyDisplayed.Clear();
                 
                 //trade off equivilent pieces
-                matchingPieces = blackPiecesTakenbyWhite.Intersect(whitePiecesTakenbyBlack).ToList();
-                foreach (int tradedPiece in matchingPieces)
-                {
-                    blackPiecesActuallyDisplayed.Remove(tradedPiece);
-                    whitePiecesActuallyDisplayed.Remove(tradedPiece);
-                }
+
                 
 
                 //for every piece left, add it to the displayed pieces
@@ -113,14 +95,8 @@ namespace ChessChallenge.Application
                 foreach (int piecesToDisplay in whitePiecesRemoved)
                 {
                     whitePiecesActuallyDisplayed.Add(piecesToDisplay);
-                }
+                }*/
             }
-        }
-
-        public static void UpdateMaterialDiff(Chess.Board board)
-        {
-            currentlyExploredFenString = (FenUtility.CurrentFen(board));
-        }
 
         public static void CalculateMaterialDiff()
         {
@@ -173,6 +149,33 @@ namespace ChessChallenge.Application
                         whitePiecesTakenbyBlack.Add(6);
                         break;
                 }
+            }
+        }
+        public static void InitializeStartingPieces()
+        {
+            for (int pawns = 0; pawns < 8; pawns++)
+            {
+                startingPieces.Add(1);
+            }
+            for (int knights = 0; knights < 2; knights++)
+            {
+                startingPieces.Add(2);
+            }
+            for (int bishops = 0; bishops < 2; bishops++)
+            {
+                startingPieces.Add(3);
+            }
+            for (int Rooks = 0; Rooks < 2; Rooks++)
+            {
+                startingPieces.Add(4);
+            }
+            for (int Queens = 0; Queens < 1; Queens++)
+            {
+                startingPieces.Add(5);
+            }
+            for (int Kings = 0; Kings < 1; Kings++)
+            {
+                startingPieces.Add(6);
             }
         }
     }

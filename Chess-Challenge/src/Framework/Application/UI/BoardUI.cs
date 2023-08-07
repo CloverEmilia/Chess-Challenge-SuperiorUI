@@ -276,7 +276,7 @@ namespace ChessChallenge.Application
                 int fontSpacing = UIHelper.ScaleInt(1);
                 var namePos = new Vector2(boardStartX, y);
                 //this is probably fine
-                Raylib.DrawRectangle((int)namePos.X - UIHelper.ScaleInt(16), (int)namePos.Y - UIHelper.ScaleInt(48), (int)UIHelper.Scale((Raylib.MeasureText($"{name}", fontSize) * 2.2f)), UIHelper.ScaleInt(95), theme.BorderCol);
+                Raylib.DrawRectangle((int)namePos.X - UIHelper.ScaleInt(16), (int)namePos.Y - UIHelper.ScaleInt(48), (int)UIHelper.Scale((Raylib.MeasureText($"{name}   ", fontSize) * 1.55f)), UIHelper.ScaleInt(95), theme.BorderCol);
                 UIHelper.DrawText($"{name}", namePos, fontSize, fontSpacing, colName == "White" ? theme.strongNeutralTextColor : Color.BLACK); //I feel like it should be white, but, it just feels a smidge too much, idk
                 var timePos = new Vector2(boardStartX + squareSize * 6.5f, y); //the .x here is fake, we set it later, I don't feel like fixing when I'll have to overhaul this entire thing when I have time
                 string timeText;
@@ -293,7 +293,7 @@ namespace ChessChallenge.Application
 
                     timeText = $"T:{numMinutes:00}:{numSeconds:00}.{dec}";
                 }
-                timePos.X = UIHelper.Scale(-600) + UIHelper.Scale((Raylib.MeasureText($"{name}", fontSize) * 1.2f));
+                timePos.X = UIHelper.Scale(-580) + (int)UIHelper.Scale((Raylib.MeasureText($"{name}   ", fontSize) * 1.5f));
                 UIHelper.DrawText(timeText, timePos, fontSize, fontSpacing, textCol, UIHelper.AlignH.Left);
             }
         }

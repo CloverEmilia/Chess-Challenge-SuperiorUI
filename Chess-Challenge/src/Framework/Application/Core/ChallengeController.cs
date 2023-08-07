@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using static ChessChallenge.Application.Settings;
 using static ChessChallenge.Application.ConsoleHelper;
 
+
 namespace ChessChallenge.Application
 {
     public class ChallengeController
@@ -41,6 +42,9 @@ namespace ChessChallenge.Application
         readonly Random rng;
         int gameID;
         bool isPlaying;
+        public bool isTournamentActive;
+        int tournamentCurrentBlackPlayerIndex;
+        int tournamentCurrentWhitePlayerIndex;
         public ChessPlayer PlayerWhite { get; private set; }
         public ChessPlayer PlayerBlack {get;private set;}
 
@@ -187,8 +191,6 @@ namespace ChessChallenge.Application
 
         void NotifyTurnToMove()
         {
-            MaterialDiffUI.UpdateMaterialDiff(board);
-
             //playerToMove.NotifyTurnToMove(board);
             if (PlayerToMove.IsHuman)
             {
@@ -327,7 +329,7 @@ namespace ChessChallenge.Application
                 pgns.AppendLine(pgn);
 
                 // If 2 bots playing each other, start next game automatically.
-                if (PlayerWhite.IsBot && PlayerBlack.IsBot)
+                if (PlayerWhite.IsBot && PlayerBlack.IsBot && isTournamentActive == false)
                 {
                     UpdateBotMatchStats(result);
                     botMatchGameIndex++;
@@ -336,7 +338,7 @@ namespace ChessChallenge.Application
                     if (botMatchGameIndex < numGamesToPlay && autoStartNextBotMatch)
                     {
                         botAPlaysWhite = !botAPlaysWhite;
-                        const int startNextGameDelayMs = 600;
+                        const int startNextGameDelayMs = 60; //originally 600, 60 is still viewable but more practical for the fastest of bots
                         System.Timers.Timer autoNextTimer = new(startNextGameDelayMs);
                         int originalGameID = gameID;
                         autoNextTimer.Elapsed += (s, e) => AutoStartNextBotMatchGame(originalGameID, autoNextTimer);
@@ -347,6 +349,37 @@ namespace ChessChallenge.Application
                     else if (autoStartNextBotMatch)
                     {
                         Log("Match finished", false, ConsoleColor.Blue);
+                    }
+                }
+
+                // If it is a Tournament
+                if (isTournamentActive)
+                {
+                    bool matchHasBeenSelected = false;
+
+                    while(matchHasBeenSelected == false){
+                        if(tournamentCurrentBlackPlayerIndex < Enum.GetValues(typeof(PlayerType)).Length)
+                        {
+                            if (tournamentCurrentWhitePlayerIndex < Enum.GetValues(typeof(PlayerType)).Length)
+                            {
+                                if(tournamentCurrentBlackPlayerIndex != 0 && tournamentCurrentWhitePlayerIndex != 0 && tournamentCurrentBlackPlayerIndex != tournamentCurrentWhitePlayerIndex)
+                                {
+                                    Console.WriteLine(tournamentCurrentBlackPlayerIndex + " Inner " + tournamentCurrentWhitePlayerIndex);
+                                    StartNewGame((PlayerType)tournamentCurrentBlackPlayerIndex, (PlayerType)tournamentCurrentWhitePlayerIndex);
+                                    matchHasBeenSelected = true;
+                                }
+                                tournamentCurrentWhitePlayerIndex++;
+                            } else{
+                                tournamentCurrentWhitePlayerIndex = 0;
+                                tournamentCurrentBlackPlayerIndex++;
+                            }
+                        } else{
+                            tournamentCurrentWhitePlayerIndex = 0;
+                            tournamentCurrentBlackPlayerIndex = 0;
+                            Console.WriteLine("TTT Over!");
+                            matchHasBeenSelected = true;
+                            //StartNewGame(PlayerType.Human, PlayerType.Human); //can be used to make tournament mode not loop
+                        }
                     }
                 }
             }
@@ -438,6 +471,7 @@ namespace ChessChallenge.Application
         {
             BotBrainCapacityUI.Draw(tokenCount, debugTokenCount, MaxTokenCount);
             MenuUI.DrawButtons(this);
+            MaterialDiffUI.currentlyExploredFenString = FenUtility.CurrentFen(board);
             MaterialDiffUI.DrawMaterialDiff(this, boardUI);
             EvalBarUI.DrawEvalBar(this);
             MatchStatsUI.DrawMatchStats(this);
