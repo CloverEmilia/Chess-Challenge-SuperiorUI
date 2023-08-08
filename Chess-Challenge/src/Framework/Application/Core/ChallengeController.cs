@@ -171,7 +171,6 @@ namespace ChessChallenge.Application
 
         Move GetBotMove()
         {
-            totalMovesPlayed++;
             //Console.WriteLine("ehhehe, hehehe, ahahaha, HAHHAHAAHHHAA");
             
             API.Board botBoard = new(board);
@@ -258,6 +257,11 @@ namespace ChessChallenge.Application
         {
             if (IsLegal(chosenMove))
             {
+                totalMovesPlayed++;
+                if(chosenMove.isCapture == true){
+                    Console.WriteLine("no it does actually");
+                }
+
                 PlayerToMove.AddIncrement(IncrementMilliseconds);
                 if (PlayerToMove.IsBot)
                 {
@@ -444,7 +448,7 @@ namespace ChessChallenge.Application
         {
             do
             {
-                Console.WriteLine(tempControlVariable);
+                //Console.WriteLine(tempControlVariable);
                 tempControlVariable++;
                 if (isPlaying)
                 {
