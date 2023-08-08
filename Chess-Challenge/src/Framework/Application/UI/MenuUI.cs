@@ -181,7 +181,7 @@ namespace ChessChallenge.Application
             if (NextButtonInRow("(broke)fast forward", ref buttonPos, spacing, buttonSize))
             {
                 controller.fastForward = !controller.fastForward;
-                Settings.RunBotsOnSeparateThread = !Settings.RunBotsOnSeparateThread;
+                Settings.RunBotsOnSeparateThread = false;
             }
 
             if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))

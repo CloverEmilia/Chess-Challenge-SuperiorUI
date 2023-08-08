@@ -344,13 +344,14 @@ namespace ChessChallenge.Application
                         if (fastForward)
                         {
                             StartNewGame(PlayerBlack.PlayerType, PlayerWhite.PlayerType);
-                        }
+                        } else{
                         const int startNextGameDelayMs = 60; //originally 600, 60 is still viewable but more practical for the fastest of bots
                         System.Timers.Timer autoNextTimer = new(startNextGameDelayMs);
                         int originalGameID = gameID;
                         autoNextTimer.Elapsed += (s, e) => AutoStartNextBotMatchGame(originalGameID, autoNextTimer);
                         autoNextTimer.AutoReset = false;
                         autoNextTimer.Start();
+                        }
                     }
                     else if (autoStartNextBotMatch)
                     {
