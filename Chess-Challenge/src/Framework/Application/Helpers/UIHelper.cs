@@ -1,14 +1,14 @@
 ﻿using Raylib_cs;
 using System;
+using System.IO;
 using System.Numerics;
-using static ChessChallenge.Application.FileHelper;
 
 namespace ChessChallenge.Application
 {
     public static class UIHelper
     {
         static readonly bool SDF_Enabled = true;
-        const string fontName = "damase_v2.ttf";
+        const string fontName = "OPENSANS-SEMIBOLD.TTF";
         const int referenceResolution = 1920;
 
         static Font font;
@@ -81,57 +81,32 @@ namespace ChessChallenge.Application
             Rectangle rec = new(centre.X - size.X / 2, centre.Y - size.Y / 2, size.X, size.Y);
 
             Color normalCol = new(40, 40, 40, 255);
-            Color hoverCol = new(230, 200, 150, 255);
-            Color pressCol = new(250, 230, 130, 255);
+            Color hoverCol = new(3, 173, 252, 255);
+            Color pressCol = new(2, 119, 173, 255);
 
             bool mouseOver = MouseInRect(rec);
             bool pressed = mouseOver && Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT);
             bool pressedThisFrame = pressed && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT);
             Color col = mouseOver ? (pressed ? pressCol : hoverCol) : normalCol;
-            Color textCol = mouseOver ? Color.WHITE : new Color(130, 130, 130, 205);
-            int fontSize = ScaleInt(28);
-
-            if (pressed) { //squishy button interactivity
-                SquishButtonWidthAndPosition(ref rec);
-                fontSize = ScaleInt(38);
-            }
 
             Raylib.DrawRectangleRec(rec, col);
+            Color textCol = mouseOver ? Color.WHITE : new Color(180, 180, 180, 255);
+            int fontSize = ScaleInt(32);
 
             DrawText(text, centre, fontSize, 1, textCol, AlignH.Centre);
 
             return pressedThisFrame;
         }
 
-            //this might be needless by a couple lines, I've been staring at it too long
-        static void SquishButtonWidthAndPosition(ref Rectangle rec)
-        {
-            // Get the original button dimensions
-            float originalWidth = rec.width;
-            float originalHeight = rec.height;
-            Vector2 originalPosition = new(rec.x, rec.y);
-
-            // Calculate the new dimensions;
-            float newWidth = originalWidth * 0.75f;
-            float newHeight = originalHeight *1.25f;
-
-            // Calculate the change
-            float widthChange = originalWidth - newWidth;
-            float heightChange = originalHeight - newHeight;
-
-            // Update the dimensions
-            rec.width = newWidth;
-            rec.height = newHeight;
-
-            // adjust to keep centered, pivot is in the center
-            rec.x = originalPosition.X + widthChange / 2;
-            rec.y = originalPosition.Y + heightChange / 2;
-        }
-
         static bool MouseInRect(Rectangle rec)
         {
             Vector2 mousePos = Raylib.GetMousePosition();
             return mousePos.X >= rec.x && mousePos.Y >= rec.y && mousePos.X <= rec.x + rec.width && mousePos.Y <= rec.y + rec.height;
+        }
+
+        public static string GetResourcePath(params string[] localPath)
+        {
+            return Path.Combine(Directory.GetCurrentDirectory(), "resources", Path.Combine(localPath));
         }
 
         public static float Scale(float val, int referenceResolution = referenceResolution)

@@ -25,13 +25,6 @@ namespace ChessChallenge.Chess
             Board board = new Board();
             board.LoadPosition(startFen);
             // Headers
-                //This is borrowed from Odin on the discord, 
-                //makes it easy to get a total number of matches vs. another bot if you wanna do something with that
-            if (result is not GameResult.NotStarted or GameResult.InProgress)
-            {
-                if (result == GameResult.WhiteIsMated) pgn.AppendLine($"[\"{whiteName}\" is mated]");
-                if (result == GameResult.BlackIsMated) pgn.AppendLine($"[\"{blackName}\" is mated]");
-            }
             if (!string.IsNullOrEmpty(whiteName))
             {
                 pgn.AppendLine($"[White \"{whiteName}\"]");

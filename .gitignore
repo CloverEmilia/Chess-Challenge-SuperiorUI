@@ -9,7 +9,6 @@
 *.user
 *.userosscache
 *.sln.docstates
-SetDirectoriesChecker.cs
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -397,6 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-.vscode/launch.json
-.vscode/tasks.json
-Chess-Challenge/src/Framework/Application/Helpers/SetDirectoriesChecker.cs
