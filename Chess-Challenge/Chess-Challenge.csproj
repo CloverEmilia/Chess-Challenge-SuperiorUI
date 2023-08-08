@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+  <PackageReference Include="NAudio" Version="2.1.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <Reference Include="Microsoft.CodeAnalysis">
       <HintPath>src\Token Counter\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>

@@ -6,6 +6,7 @@ using System.Numerics;
 using System.IO;
 using static ChessChallenge.Application.UIHelper;
 using ChessChallenge.Application.APIHelpers;
+using static ChessChallenge.Application.FileHelper;
 
 namespace ChessChallenge.Application
 {
@@ -42,6 +43,7 @@ namespace ChessChallenge.Application
         Move moveToAnimate;
         double moveAnimStartTime;
         bool isAnimatingMove;
+        Font font = Raylib.LoadFontEx(GetResourcePath("Fonts", "damase_v2.ttf"), 128, null, 0);
 
 
         public enum HighlightType
@@ -275,8 +277,10 @@ namespace ChessChallenge.Application
                 int fontSize = UIHelper.ScaleInt(64);
                 int fontSpacing = UIHelper.ScaleInt(1);
                 var namePos = new Vector2(boardStartX, y);
+                //Console.WriteLine(Raylib.MeasureTextEx(font ,$"{name}", fontSize, fontSpacing) + colName + "qwer");
+
                 //this is probably fine
-                Raylib.DrawRectangle((int)namePos.X - UIHelper.ScaleInt(16), (int)namePos.Y - UIHelper.ScaleInt(48), (int)UIHelper.Scale((Raylib.MeasureText($"{name}   ", fontSize) * 1.55f)), UIHelper.ScaleInt(95), theme.BorderCol);
+                Raylib.DrawRectangle((int)namePos.X - UIHelper.ScaleInt(16), (int)namePos.Y - UIHelper.ScaleInt(48), (int)(Raylib.MeasureTextEx(font, $"{name}", fontSize, fontSpacing).X * 1.2f), UIHelper.ScaleInt(95), theme.BorderCol);
                 UIHelper.DrawText($"{name}", namePos, fontSize, fontSpacing, colName == "White" ? theme.strongNeutralTextColor : Color.BLACK); //I feel like it should be white, but, it just feels a smidge too much, idk
                 var timePos = new Vector2(boardStartX + squareSize * 6.5f, y); //the .x here is fake, we set it later, I don't feel like fixing when I'll have to overhaul this entire thing when I have time
                 string timeText;
@@ -293,7 +297,7 @@ namespace ChessChallenge.Application
 
                     timeText = $"T:{numMinutes:00}:{numSeconds:00}.{dec}";
                 }
-                timePos.X = UIHelper.Scale(-580) + (int)UIHelper.Scale((Raylib.MeasureText($"{name}   ", fontSize) * 1.5f));
+                timePos.X = UIHelper.Scale(-590) + (int)UIHelper.Scale(Raylib.MeasureTextEx(font, $"{name}", fontSize, fontSpacing).X * 1.7f);
                 UIHelper.DrawText(timeText, timePos, fontSize, fontSpacing, textCol, UIHelper.AlignH.Left);
             }
         }

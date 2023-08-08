@@ -36,6 +36,7 @@ namespace ChessChallenge.Application
         static int lastTurnSaved;
 
 
+
         public static void DrawButtons(ChallengeController controller)
         {
             //Initialize Variables for each individual button (not static because ref is needed, may as well keep the derivitives in the same context)
@@ -179,7 +180,7 @@ namespace ChessChallenge.Application
 
             if (NextButtonInRow("(broke)fast forward", ref buttonPos, spacing, buttonSize))
             {
-                //
+
             }
 
             if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))

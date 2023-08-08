@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ChessChallenge.Application;
 
 namespace ChessChallenge.Chess
 {
@@ -67,7 +68,6 @@ namespace ChessChallenge.Chess
         public int totalPieceCountWithoutPawnsAndKings;
         bool cachedInCheckValue;
         bool hasCachedInCheckValue;
-
 
 
         public Board(Board? source = null)

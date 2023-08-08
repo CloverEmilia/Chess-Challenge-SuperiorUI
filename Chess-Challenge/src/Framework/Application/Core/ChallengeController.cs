@@ -96,7 +96,7 @@ namespace ChessChallenge.Application
 
             BotStatsA = new BotMatchStats("IBot");
             BotStatsB = new BotMatchStats("IBot");
-            botMatchStartFens = FileHelper.ReadResourceFile("Fens.txt").Split('\n').Where(fen => fen.Length > 0).ToArray();
+            botMatchStartFens = FileHelper.ReadResourceFile("Fens.txt").Split('\n');
             botTaskWaitHandle = new AutoResetEvent(false);
 
             StartNewGame(PlayerType.Human, PlayerType.MyBot);
@@ -106,7 +106,7 @@ namespace ChessChallenge.Application
         {
             // End any ongoing game
             EndGame(GameResult.DrawByArbiter, log: false, autoStartNextBotMatch: false);
-            gameID = rng.Next();
+            gameID = gameID++;
 
             // Stop prev task and create a new one
             if (RunBotsOnSeparateThread)
@@ -170,6 +170,7 @@ namespace ChessChallenge.Application
         Move GetBotMove()
         {
             totalMovesPlayed++;
+            //Console.WriteLine("ehhehe, hehehe, ahahaha, HAHHAHAAHHHAA");
             
             API.Board botBoard = new(board);
             try
