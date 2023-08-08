@@ -444,6 +444,7 @@ namespace ChessChallenge.Application
         {
             do
             {
+                Console.WriteLine(tempControlVariable);
                 tempControlVariable++;
                 if (isPlaying)
                 {
@@ -476,7 +477,7 @@ namespace ChessChallenge.Application
                     fastForward = false;
                 }
 
-            } while (fastForward && isWaitingToPlayMove && tempControlVariable < 300);
+            } while (fastForward && isWaitingToPlayMove && tempControlVariable < 3000);
             tempControlVariable = 0;
         }
 
