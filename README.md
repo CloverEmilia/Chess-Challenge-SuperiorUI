@@ -22,8 +22,6 @@
 
 -MoonWalker's MatchStatsUI
 
--Aug's stockfishbot.cs is the indirect basis for the stockfish evaluation bar
-
 -Aug's Tier 1 elo bot
 
 -JW's 2 elo bot
