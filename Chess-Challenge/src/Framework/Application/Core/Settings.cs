@@ -10,7 +10,7 @@ namespace ChessChallenge.Application
         public const int GameDurationMilliseconds = 60 * 1000;
         public const int IncrementMilliseconds = 0 * 1000;
         public const float MinMoveDelay = 0;
-        public static readonly bool RunBotsOnSeparateThread = true;
+        public static bool RunBotsOnSeparateThread = true;
 
         // Screen Settings
         public const bool DisplayBoardCoordinates = true;
@@ -19,7 +19,7 @@ namespace ChessChallenge.Application
 
         // Other settings
         public const int MaxTokenCount = 1024;
-        public const LogType MessagesToLog = LogType.ErrorOnly;
+        public const LogType MessagesToLog = LogType.All;
 
         public enum LogType
         {
