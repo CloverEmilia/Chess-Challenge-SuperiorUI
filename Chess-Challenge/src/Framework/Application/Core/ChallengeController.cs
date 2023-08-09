@@ -333,11 +333,19 @@ namespace ChessChallenge.Application
                         //Adds the name of the bot to the result, for easy identification
                     string adjustedResults = result.ToString();
                     if(adjustedResults.Contains("Black")){
-                        adjustedResults = PlayerBlack.Bot.ToString() + "" + adjustedResults;
+                        if(PlayerBlack.IsBot){
+                            adjustedResults = PlayerBlack.Bot.ToString() + "" + adjustedResults;
+                        } else{ 
+                            adjustedResults = "Human" + "" + adjustedResults;
+                        }
                     }
                     if (adjustedResults.Contains("White"))
                     {
-                        adjustedResults = PlayerWhite.Bot.ToString() + "" + adjustedResults;
+                        if(PlayerWhite.IsBot){
+                            adjustedResults = PlayerWhite.Bot.ToString() + "" + adjustedResults;
+                        } else{ 
+                            adjustedResults = "Human" + "" + adjustedResults;
+                        }
                     }
 
                     Log("Game Over: " + adjustedResults, false, ConsoleColor.Blue);
