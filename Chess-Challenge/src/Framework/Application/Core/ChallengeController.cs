@@ -37,6 +37,17 @@ namespace ChessChallenge.Application
         //ect.  
     };
 
+        public static ChessChallenge.API.IChessBot? CreateBot(PlayerType type)
+        {
+            return type switch
+            {
+                PlayerType.MyBot => new MyBot(),
+                PlayerType.EvilBot => new EvilBot(),
+                // If you have other bot types, you can add them here as well
+                _ => null
+            };
+        }
+
         // Game state
         public Board board; //I am sorry for making this public, should this not be public? https://imgur.com/a/PsgtdWw
         readonly Random rng;
