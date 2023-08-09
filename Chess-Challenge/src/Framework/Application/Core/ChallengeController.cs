@@ -259,8 +259,10 @@ namespace ChessChallenge.Application
             if (IsLegal(chosenMove))
             {
                 totalMovesPlayed++;
-                API.Board stockBoard = new(board);
-                stockFishInstance.EvaluateScore(stockBoard, 800);
+                if(fastForward == false){
+                    API.Board stockBoard = new(board);
+                    stockFishInstance.EvaluateScore(stockBoard, 800);
+                }
 
                 PlayerToMove.AddIncrement(IncrementMilliseconds);
                 if (PlayerToMove.IsBot)

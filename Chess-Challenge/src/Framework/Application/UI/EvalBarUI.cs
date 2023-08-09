@@ -17,21 +17,40 @@ namespace ChessChallenge.Application
         static int evalBarPositionY = 100;
         static int evalBarSizeX = 40;
         static int evalBarSizeY = 847; //I hate this number
+        static float correctedHeight;
+        static int currentFramesOfCorrectedHeightDifferenceAccumulated;
 
-        static int tempTestVariable; //remove
+
         public static void DrawEvalBar(ChallengeController controller)
         {
             //Console.WriteLine(StockFish.currentlyEvaluatedScore);
                 //place a black rectangle over the entire area and then cover with white what's actually needed
             Raylib.DrawRectangle(UIHelper.ScaleInt(evalBarPositionX), UIHelper.ScaleInt(evalBarPositionY), UIHelper.ScaleInt(evalBarSizeX), UIHelper.ScaleInt(evalBarSizeY), BoardUI.theme.weakNeutralTextColor);
-            Raylib.DrawRectangle(UIHelper.ScaleInt(evalBarPositionX), UIHelper.ScaleInt(evalBarPositionY), UIHelper.ScaleInt(evalBarSizeX), UIHelper.ScaleInt(evalBarSizeY) /((Raylib.GetMouseY() / 10) + 1), BoardUI.theme.strongNeutralTextColor);
+            float winChance = 2 / (1 + MathF.Exp(-0.00368208f * StockFish.savedEvaluatedScore)) - 1;
+            float height = 100 - (winChance + 1) * 50;
+            Raylib.DrawRectangle(UIHelper.ScaleInt(evalBarPositionX), UIHelper.ScaleInt(evalBarPositionY), UIHelper.ScaleInt(evalBarSizeX), (int)(UIHelper.ScaleInt(evalBarSizeY) * (correctedHeight / 100)), BoardUI.theme.strongNeutralTextColor);
 
-            Console.WriteLine(StockFish.currentlyEvaluatedScore);
-            tempTestVariable++;
-            if(tempTestVariable > 1000){
-                //GetStockfishEval(controller, controller.board, 1);
-                tempTestVariable = 0;
+            if (correctedHeight != ReverseAlongMidpoint((int)height)){
+                currentFramesOfCorrectedHeightDifferenceAccumulated++;
+                if(currentFramesOfCorrectedHeightDifferenceAccumulated > 15){
+                    correctedHeight = ReverseAlongMidpoint((int)height);
+                }
+            } else{
+                currentFramesOfCorrectedHeightDifferenceAccumulated = 0;
             }
+        
+
+            Console.WriteLine("A " + StockFish.currentlyEvaluatedScore);
+            //Console.WriteLine("B " + winChance);
+            //Console.WriteLine("C " + height);
+        }
+
+        static int ReverseAlongMidpoint(int value)
+        {
+            const int midpoint = 50;
+            int difference = midpoint - value;
+            int reversedValue = midpoint + difference;
+            return reversedValue;
         }
     }
 
@@ -44,6 +63,7 @@ namespace ChessChallenge.Application
 
         private const int SKILL_LEVEL = 20;
         public static int currentlyEvaluatedScore;
+        public static int savedEvaluatedScore;
 
         private const string stockfishExe = @"C:\Users\Clover\Desktop\stockfish-windows-x86-64-avx2.exe";
         
@@ -92,6 +112,7 @@ namespace ChessChallenge.Application
             while ((line = Outs().ReadLine()) != null)
             {
                 if(line.StartsWith("bestmove")){
+                    savedEvaluatedScore = currentlyEvaluatedScore;
                     return;
                 }
                 ExtractScore(line);
