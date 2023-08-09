@@ -16,10 +16,6 @@
   <ItemGroup>
  <PackageReference Include="System.CodeDom" Version="5.0.0" />
   </ItemGroup>
-  
-  <ItemGroup>
-  <PackageReference Include="Stockfish.NET" Version="1.0.7" />
-  </ItemGroup>
 
   <ItemGroup>
   <PackageReference Include="NAudio" Version="2.1.0" />

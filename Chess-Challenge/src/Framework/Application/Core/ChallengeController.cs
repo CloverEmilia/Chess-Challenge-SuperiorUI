@@ -80,6 +80,7 @@ namespace ChessChallenge.Application
         int totalMovesPlayed = 0;
         public int trueTotalMovesPlayed = 0;
         public bool fastForward = false;
+        StockFish stockFishInstance = new StockFish();
 
 
         public ChallengeController()
@@ -94,7 +95,7 @@ namespace ChessChallenge.Application
             board = new Board();
             pgns = new();
             fastForward = false;
-            EvalBarUI.InitializeStockfish();
+            stockFishInstance.InitializeStockFish();
 
             BotStatsA = new BotMatchStats("IBot");
             BotStatsB = new BotMatchStats("IBot");
@@ -258,9 +259,8 @@ namespace ChessChallenge.Application
             if (IsLegal(chosenMove))
             {
                 totalMovesPlayed++;
-                if(chosenMove.isCapture == true){
-                    Console.WriteLine("no it does actually");
-                }
+                API.Board stockBoard = new(board);
+                stockFishInstance.EvaluateScore(stockBoard, 800);
 
                 PlayerToMove.AddIncrement(IncrementMilliseconds);
                 if (PlayerToMove.IsBot)
