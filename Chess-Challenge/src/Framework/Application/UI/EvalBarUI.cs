@@ -4,9 +4,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using ChessChallenge.Chess;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using ChessChallenge.API;
 
 namespace ChessChallenge.Application
 {
@@ -40,7 +40,7 @@ namespace ChessChallenge.Application
             }
         
 
-            Console.WriteLine("A " + StockFish.currentlyEvaluatedScore);
+            //Console.WriteLine("A " + StockFish.currentlyEvaluatedScore);
             //Console.WriteLine("B " + winChance);
             //Console.WriteLine("C " + height);
         }

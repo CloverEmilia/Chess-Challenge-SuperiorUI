@@ -184,8 +184,8 @@ namespace ChessChallenge.Application
         Move GetBotMove()
         {
             //Console.WriteLine("ehhehe, hehehe, ahahaha, HAHHAHAAHHHAA");
-            
             API.Board botBoard = new(board);
+
             try
             {
                 API.Timer timer = new(PlayerToMove.TimeRemainingMs, PlayerNotOnMove.TimeRemainingMs, GameDurationMilliseconds, IncrementMilliseconds);
@@ -273,6 +273,7 @@ namespace ChessChallenge.Application
                 if(fastForward == false){
                     API.Board stockBoard = new(board);
                     stockFishInstance.EvaluateScore(stockBoard, 800);
+                    MaterialDiffUI.CalculateMaterialDiff(stockBoard); //hehe
                 }
 
                 PlayerToMove.AddIncrement(IncrementMilliseconds);
@@ -519,8 +520,7 @@ namespace ChessChallenge.Application
         {
             BotBrainCapacityUI.Draw(tokenCount, debugTokenCount, MaxTokenCount);
             MenuUI.DrawButtons(this);
-            MaterialDiffUI.currentlyExploredFenString = FenUtility.CurrentFen(board);
-            MaterialDiffUI.DrawMaterialDiff(this, boardUI);
+            MaterialDiffUI.DrawMaterialDiff();
             EvalBarUI.DrawEvalBar(this);
             MatchStatsUI.DrawMatchStats(this);
         }

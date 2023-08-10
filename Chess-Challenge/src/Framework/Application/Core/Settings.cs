@@ -14,8 +14,8 @@ namespace ChessChallenge.Application
 
         // Screen Settings
         public const bool DisplayBoardCoordinates = true;
-        public const int defaultScreenX = 1280;
-        public const int defaultScreenY = 720;
+        public const int defaultScreenX = (int)(1280 / 1.2f / 1.2f);
+        public const int defaultScreenY = (int)(720 / 1.2f / 1.2f);
 
         // Other settings
         public const int MaxTokenCount = 1024;
