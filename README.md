@@ -54,14 +54,14 @@
 
 -I only put moderate effort into confirming I integrated UCI support in correctly, I think I did, but, I can only confirm I *think* it worked.
 
-## TODO And Version History
+## TODO and Version History
 ----Coming Soon----
 
--Fixing weird piecelist errors when selecting bots weirdly (as soon as I know what that is, top priority)
+-Fix weird piecelist errors when selecting bots weirdly (as soon as I know what that is, top priority)
 
 -Cleaned up and commented code, cleaned usings;,,
 
--Save tourneyment results seperately (parralel to normal saves)
+-Save tournament results seperately (parralel to normal saves)
 
 -Setup board from fenn string (if I can get windows.forms or something 3rd party working), and/or a fen string.txt selector
 
@@ -75,11 +75,11 @@
 
 -Undo button
 
--I'll port in my Integrated "Champion" custom fen start list, to be used in a mini-tournament
+-I'll port in my "Champion" custom fen start list, to be used in a mini-tournament
 
 -Move history
 
-----Do not get your hopes up----
+----Don't get your hopes up----
 
 -Example Bot with four-phased (I think, I think enemy thinks, I think enemy thinks, I think enemy thinks I think), for testing/demonstrating "weirdo" bots with odd preferences.
 
