@@ -5,13 +5,15 @@
 ## Features
 -Entirely reworked and unified UI
 
--Extremely simplified process for adding and playing bots (see the .txt in MyBot), featuring a codeless, infinitely scrolling bot selector
+-Extremely simplified process for adding (see the .txt in MyBot) and playing bots, feauturing a no-code-needed, infinitely scrolling duel-sided bot selector
 
--Tourneyment mode for automatically running round-robin style comparison of all currently installed bots
+-Non-hanging fast-forward
+
+-Tourneyment mode for automatically round-robin comparison of all currently installed bots
 
 -Stockfish evaluation bar (//see known issues)
 
--Overhauled save system, featuring bot uniqueness checks via hashing code, to automatically distinguish between old and new versions of bots
+-Overhauled save system, featuring bot uniqueness checks via hashing code, to automatically distinguish between old and new versions of bots (//not yet comparing uniqueness between bot names)
 
 -Material Difference UI (🤏that tiny thing with the pieces that have been taken)
 
@@ -30,41 +32,42 @@
 
 -Typin's duck piece textures (quack)
 
+-Countless bug fixes and suggestions from Toanth
 
 ## Changes
 -Everything (afaik) now uses BoardTheme.cs, so changing it should result in more pleasant and cohesive results, also expanded with text color options
 
 -Screen size can now be changed incrimentally
 
--Added TimePerMove to bot stats
+-Added (mS spent)TimePerMove to bot stats
 
 -Saving now happens per a customizable number of games
 
 -Removed .examples namespace so evilbot can be safely removed
 
 ## Known Issues
--Eval Bar broke-y okey, should in theory work but I haven't been able to get someone to confirm if there's an issue with my implimentation or something purely on my end
-
--Fast Forward hangs the client, this isn't anything new to my mod but it is something I'm hoping to band-aid it by dropping out of it every few seconds for a short bit.
+-Eval bar backend at least 85% working, eval bar frontend 10-65% working
 
 -BoardUI doesn't scale correctly (need to raylib.scaleint each value only once)
 
--Hashing for bots is broken, but I know how to fix it, just need to get around to it
+-the Grey border under the bots name, and positioning for the time, is messed up, this is fixable, just not highest-priority
 
--the Grey border under the bots name, and positioning for the time, is messed up, this is also obviously fixable, but just not highest-priority
-
--I have not personally confirmed I integrated UCI in correctly, I think I did, but, I personally wasn't able to get it to work
+-I only put moderate effort into confirming I integrated UCI support in correctly, I think I did, but, I can only confirm I *think* it worked.
 
 ## TODO And Version History
 ----Coming Soon----
 
--Setup board from fenn string (if I can get windows.forms or something 3rd party working)
+-Fixing weird piecelist errors when selecting bots weirdly (as soon as I know what that is, top priority)
+
+-Cleaned up and commented code, cleaned usings;,,
+
+-Save tourneyment results seperately (parralel to normal saves)
+
+-Setup board from fenn string (if I can get windows.forms or something 3rd party working), and/or a fen string.txt selector
 
 -Minor to Moderate prettification, depending on how many remaing ideas work out.
 
--Move history
-
--Torneyment Mode
+-Easter eggs tab (for fun little rendering hehe's)
 
 ----Probably Coming----
 
@@ -72,12 +75,24 @@
 
 -Undo button
 
+-I'll port in my Integrated "Champion" custom fen start list, to be used in a mini-tournament
+
+-Move history
+
 ----Do not get your hopes up----
+
+-Example Bot with four-phased (I think, I think enemy thinks, I think enemy thinks, I think enemy thinks I think), for testing/demonstrating "weirdo" bots with odd preferences.
 
 -Bot brain capacity by function
 
 -Sound
 
--Markup arrows
+-Right Click Markup arrows
+
+-Integrated stats explorer
+
+-Online bot database (just an alternative to the current public github repos and #post my bot channel, not online play)
+
+-A fun little minigame I won't spoil
 
 -Integrated stats explorer
