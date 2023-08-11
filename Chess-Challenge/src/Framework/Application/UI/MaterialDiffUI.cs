@@ -32,17 +32,17 @@ namespace ChessChallenge.Application
             {
                 Console.Write(displayInt + " ");
             }
-                Console.WriteLine(" left nottaken ");
+                //Console.WriteLine(" left nottaken ");
             foreach (int displayInt in startingPieces)
             {
                 Console.Write(displayInt + " ");
             }
-            Console.WriteLine(" left starting ");
+            //.WriteLine(" left starting ");
             foreach (int displayInt in blackPiecesNotTakenbyWhite.Except(startingPieces).ToList())
             {
                 Console.Write(displayInt + " ");
             }
-            Console.WriteLine(" left total ");
+            //Console.WriteLine(" left total ");
 
         }
 
