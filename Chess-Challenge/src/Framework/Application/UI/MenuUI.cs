@@ -179,10 +179,16 @@ namespace ChessChallenge.Application
             // functional buttons
             buttonPos.Y += breakSpacing;
 
-            if (NextButtonInRow("(broke)fast forward", ref buttonPos, spacing, buttonSize))
+            if (NextButtonInRow("FF on", ref buttonPos, spacing, buttonSize))
             {
-                controller.fastForward = !controller.fastForward;
-                Settings.RunBotsOnSeparateThread = !Settings.RunBotsOnSeparateThread;
+                controller.fastForward = controller.fastForward = true;
+                Settings.RunBotsOnSeparateThread = Settings.RunBotsOnSeparateThread = false ;
+            }
+
+            if (NextButtonInRow("FF off", ref buttonPos, spacing, buttonSize))
+            {
+                controller.fastForward = controller.fastForward = false;
+                Settings.RunBotsOnSeparateThread = Settings.RunBotsOnSeparateThread = true;
             }
 
             if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))
