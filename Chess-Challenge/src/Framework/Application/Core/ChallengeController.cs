@@ -38,6 +38,8 @@ namespace ChessChallenge.Application
             {
                 PlayerType.MyBot => new MyBot(),
                 PlayerType.EvilBot => new EvilBot(),
+                PlayerType.NegamaxBasic => new NegamaxBasic(),
+                PlayerType.AdvancedNegamax => new AdvancedNegamax(),
                 // If you have other bot types, you can add them here as well
                 _ => null
             };
@@ -68,6 +70,7 @@ namespace ChessChallenge.Application
         bool botAPlaysWhite;
         float totalTimeTakenByBotA;
         float totalTimeTakenByBotB;
+        
 
 
         // Bot task
@@ -85,6 +88,8 @@ namespace ChessChallenge.Application
 
         int totalMovesPlayed = 0;
         public int trueTotalMovesPlayed = 0;
+        static int turnsWithSavingOn = 0;
+        static readonly int turnsBetweenSavesWhenTurnedOn = 50;
         public bool fastForward = false;
         StockFish stockFishInstance = new StockFish();
 
@@ -297,6 +302,7 @@ namespace ChessChallenge.Application
             if (IsLegal(chosenMove))
             {
                 totalMovesPlayed++;
+
                 if(fastForward == false){
                     API.Board stockBoard = new(board);
                     stockFishInstance.EvaluateScore(stockBoard, 800);
@@ -350,7 +356,14 @@ namespace ChessChallenge.Application
         void EndGame(GameResult result, bool log = true, bool autoStartNextBotMatch = true)
         {
             trueTotalMovesPlayed += totalMovesPlayed;
+            turnsWithSavingOn += totalMovesPlayed;
             totalMovesPlayed = 0;
+
+            if(turnsWithSavingOn > turnsBetweenSavesWhenTurnedOn){
+                turnsWithSavingOn = 0;
+                SaveGame();
+            }
+
             if (isPlaying)
             {
                 isPlaying = false;
@@ -530,7 +543,7 @@ namespace ChessChallenge.Application
                     fastForward = false;
                 }
 
-            } while (fastForward && isWaitingToPlayMove && tempControlVariable < 3000);
+            } while (fastForward && isWaitingToPlayMove && rng.NextDouble() > 0.000001f * (totalTimeTakenByBotA + totalTimeTakenByBotB)); //this is bad but I've been staring at it for too long to fix it, if you're working with a very long or short taking bot, just set this manually, this is the best I can do right now
             tempControlVariable = 0;
         }
 
@@ -575,6 +588,23 @@ namespace ChessChallenge.Application
             botAPlaysWhite = true;
             Log($"Starting new match: {nameA} vs {nameB}", false, ConsoleColor.Blue);
             StartNewGame(botTypeA, botTypeB);
+        }
+
+        void SaveGame()
+        {
+            //for each pgn in pgns
+            //create or open a folder with the name of white and then black
+            //create or open a file with the name of the hash of the bot
+            //in that file append or create a .txt with the game results.
+            foreach (string examinedpgn in listOfPgns)
+            {
+                string nameOfBotA = SavePgnsToDisk.GetPlayerName(examinedpgn, true);
+                string nameOfBotB = SavePgnsToDisk.GetPlayerName(examinedpgn, false);
+
+                SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotA);
+                SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotB);
+            }
+            listOfPgns.Clear(); //clear out the list so we don't save the same game again
         }
 
 

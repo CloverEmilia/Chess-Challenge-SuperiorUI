@@ -30,12 +30,8 @@ namespace ChessChallenge.Application
         static readonly float amountToChangeScreenByPerButtonPress = 1.2f;
         static float screenSizeMultiplier = 1;
             //Game Saving Variables
-        static readonly int numberOfTurnsBetweenGameSaves = 50;
         public static readonly string customSaveFilePath = @"C:\replace this with your desired directory, goes to documents by default";
         static bool isIncrimentalGameSaveCurrentlyOn;
-        static int lastTurnSaved;
-
-
 
         public static void DrawButtons(ChallengeController controller)
         {
@@ -179,25 +175,36 @@ namespace ChessChallenge.Application
             // functional buttons
             buttonPos.Y += breakSpacing;
 
-            if (NextButtonInRow("FF on", ref buttonPos, spacing, buttonSize))
+            if(controller.fastForward == true){
+                if (NextButtonInRow("Fast Forward [ON]", ref buttonPos, spacing, buttonSize))
+                {
+                    controller.fastForward = false;
+                    Settings.RunBotsOnSeparateThread = Settings.RunBotsOnSeparateThread = true;
+                }
+            }
+            else
             {
-                controller.fastForward = controller.fastForward = true;
-                Settings.RunBotsOnSeparateThread = Settings.RunBotsOnSeparateThread = false ;
+                if (NextButtonInRow("Fast Forward off", ref buttonPos, spacing, buttonSize))
+                {
+                    controller.fastForward = true;
+                    Settings.RunBotsOnSeparateThread = Settings.RunBotsOnSeparateThread = false;
+                }
             }
 
-            if (NextButtonInRow("FF off", ref buttonPos, spacing, buttonSize))
+            if (isIncrimentalGameSaveCurrentlyOn == true)
             {
-                controller.fastForward = controller.fastForward = false;
-                Settings.RunBotsOnSeparateThread = Settings.RunBotsOnSeparateThread = true;
+                if (NextButtonInRow("save pgns [ON]", ref buttonPos, spacing, buttonSize))
+                {
+                    isIncrimentalGameSaveCurrentlyOn = false;
+                }
             }
-
-            if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))
+            else
             {
-                //isIncrimentalGameSaveCurrentlyOn = true;
-                SaveGame();
+                if (NextButtonInRow("save pgns off", ref buttonPos, spacing, buttonSize))
+                {
+                    isIncrimentalGameSaveCurrentlyOn = true;
+                }
             }
-
-
 
             if (NextButtonInRow("--- screen", ref buttonPos, spacing * .9f, buttonSize * .7f))
             {
@@ -208,23 +215,6 @@ namespace ChessChallenge.Application
             {
                 screenSizeMultiplier *= amountToChangeScreenByPerButtonPress;
                 UpdateApplicationWindowSize();
-            }
-
-            void SaveGame()
-            {
-                //for each pgn in pgns
-                //create or open a folder with the name of white and then black
-                //create or open a file with the name of the hash of the bot
-                //in that file append or create a .txt with the game results.
-                foreach (string examinedpgn in controller.listOfPgns)
-                {
-                    string nameOfBotA = SavePgnsToDisk.GetPlayerName(examinedpgn, true);
-                    string nameOfBotB = SavePgnsToDisk.GetPlayerName(examinedpgn, false);
-
-                    SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotA);
-                    SavePgnsToDisk.SavePgnToDisk(examinedpgn, nameOfBotB);
-                }
-                controller.listOfPgns.Clear(); //clear out the list so we don't save the same game again
             }
 
             static void UpdateApplicationWindowSize()
