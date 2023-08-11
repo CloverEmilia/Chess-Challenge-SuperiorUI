@@ -27,14 +27,9 @@ namespace ChessChallenge.Application
             //ect.
         }
 
-        public static readonly Dictionary<PlayerType, Type> BotTypeMap = new Dictionary<PlayerType, Type>
+        public static Dictionary<PlayerType, Type> BotTypeMap = new Dictionary<PlayerType, Type>
     {
         //_ => new ChessPlayer(new HumanPlayer(boardUI), type) I removed this line at some point and I don't know why, but re-adding it now throws an error
-        { PlayerType.MyBot, typeof(MyBot) },
-        { PlayerType.EvilBot, typeof(EvilBot) },
-        { PlayerType.NegamaxBasic, typeof(NegamaxBasic) },
-        { PlayerType.AdvancedNegamax, typeof(AdvancedNegamax) },
-        //ect.  
     };
 
         public static ChessChallenge.API.IChessBot? CreateBot(PlayerType type)
@@ -94,11 +89,43 @@ namespace ChessChallenge.Application
         StockFish stockFishInstance = new StockFish();
 
 
+        public static void GenerateBotListFile()
+        {
+            File.WriteAllText(@"src/Framework/Application/Helpers/SelfWritingBotList.cs", string.Empty);
+            using (StreamWriter writer = new StreamWriter(@"src/Framework/Application/Helpers/SelfWritingBotList.cs"))
+            {
+                writer.WriteLine("using System;");
+                writer.WriteLine("using System.Collections.Generic;");
+                writer.WriteLine();
+                writer.WriteLine("namespace ChessChallenge.Application");
+                writer.WriteLine("{");
+                writer.WriteLine("    public static class SelfWritingBotList");
+                writer.WriteLine("    {");
+                writer.WriteLine("        public static Dictionary<ChallengeController.PlayerType, Type> BotTypeMap = new Dictionary<ChallengeController.PlayerType, Type>");
+                writer.WriteLine("        {");
+
+                foreach (PlayerType playerType in Enum.GetValues(typeof(PlayerType)))
+                {
+                    if (playerType != PlayerType.Human)
+                    {
+                        string botTypeName = playerType.ToString();
+                        string fullBotTypeName = $"typeof({botTypeName})";
+                        writer.WriteLine($"            {{ ChallengeController.PlayerType.{playerType}, {fullBotTypeName} }},");
+                    }
+                }
+
+                writer.WriteLine("        };");
+                writer.WriteLine("    }");
+                writer.WriteLine("}");
+            }
+        }
         public ChallengeController()
         {
             Log($"Launching Chess-Challenge version {Settings.Version}");
             (tokenCount, debugTokenCount) = GetTokenCount();
             Warmer.Warm();
+            GenerateBotListFile();
+            BotTypeMap = SelfWritingBotList.BotTypeMap;
 
             rng = new Random();
             moveGenerator = new();
